@@ -30,24 +30,10 @@ app.get('/', (req, res) => {
 });
 
 
-// 🔌 Configuración de conexión MySQL (Adaptable a Local y Railway)
-const dbConfig = {
-    host: process.env.MYSQL_HOST || process.env.MYSQLHOST || process.env.DB_HOST || "localhost",
-    user: process.env.MYSQL_USER || process.env.MYSQLUSER || process.env.DB_USER || "root",
-    password: process.env.MYSQL_PASSWORD || process.env.MYSQLPASSWORD || process.env.DB_PASSWORD || "",
-    database: process.env.MYSQL_DATABASE || process.env.MYSQLDATABASE || process.env.DB_NAME || "admin_r12_db",
-    port: process.env.MYSQL_PORT || process.env.MYSQLPORT || 3306
-};
 
-const conexion = mysql.createConnection(dbConfig);
 
-conexion.connect(err => {
-    if (err) {
-        console.error("❌ Error de conexión MySQL:", err.message);
-        return;
-    }
-    console.log("✅ Conectado a la base de datos MySQL");
-});
+const conexion = require('./db');
+
 
 
 // Obtener todos los productos (Para mostrar el inventario)
