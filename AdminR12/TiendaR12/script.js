@@ -17,45 +17,7 @@ function closeModal() {
     document.body.style.overflow = "auto";
 }
 
-// LÓGICA DEL CARRITO
-function agregarAlCarritoDesdeModal() {
-    const item = {
-        nombre: document.getElementById('modalTitle').innerText,
-        precio: parseFloat(document.getElementById('modalPriceLabel').innerText.replace('Q ', '')),
-        img: document.getElementById('modalImg').src
-    };
-    
-    carrito.push(item);
-    actualizarCarritoUI();
-    closeModal();
-    toggleCarrito(); // Abrir carrito automáticamente al agregar
-}
 
-function actualizarCarritoUI() {
-    const cartContainer = document.getElementById('cart-items');
-    const totalContainer = document.getElementById('cart-total');
-    const countContainer = document.getElementById('cart-count');
-    
-    cartContainer.innerHTML = '';
-    let total = 0;
-
-    carrito.forEach((prod, index) => {
-        total += prod.precio;
-        cartContainer.innerHTML += `
-            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px;">
-                <img src="${prod.img}" width="50" style="border-radius: 5px;">
-                <div style="flex: 1;">
-                    <h4 style="margin: 0; font-size: 0.9rem;">${prod.nombre}</h4>
-                    <p style="margin: 0; color: #86868b;">Q ${prod.precio.toFixed(2)}</p>
-                </div>
-                <button onclick="eliminarItem(${index})" style="background: none; border: none; cursor: pointer;">🗑️</button>
-            </div>
-        `;
-    });
-
-    countContainer.innerText = carrito.length;
-    totalContainer.innerText = `Q ${total.toFixed(2)}`;
-}
 
 function eliminarItem(index) {
     carrito.splice(index, 1);
@@ -231,14 +193,14 @@ document.addEventListener("keydown", function(e) {
 // ========================================
 
 let clientImages = [
-    "../Imagenes/Cliente1.jpg",
-    "../Imagenes/Cliente2.jpg",
-    "../Imagenes/Cliente3.jpg",
-    "../Imagenes/Cliente4.jpg",
-    "../Imagenes/Cliente5.jpg",
-    "../Imagenes/Cliente6.jpg",
-    "../Imagenes/Cliente7.jpg",
-    "../Imagenes/Cliente8.jpg"
+    "/Imagenes/Cliente1.jpg",
+    "/Imagenes/Cliente2.jpg",
+    "/Imagenes/Cliente3.jpg",
+    "/Imagenes/Cliente4.jpg",
+    "/Imagenes/Cliente5.jpg",
+    "/Imagenes/Cliente6.jpg",
+    "/Imagenes/Cliente7.jpg",
+    "/Imagenes/Cliente8.jpg"
 ];
 
 let clientIndex = 0;
@@ -266,43 +228,6 @@ document.addEventListener('DOMContentLoaded', () => {
     cargarProductosDesdeBD();
 });
 
-function cargarProductosDesdeBD() {
-    const grid = document.getElementById('product-grid-db');
-    
-    fetch('http://localhost:3000/productos')
-        .then(response => response.json())
-        .then(productos => {
-            grid.innerHTML = ""; // Limpiamos el "Cargando..."
-
-            if (productos.length === 0) {
-                grid.innerHTML = "<p style='color: white;'>No hay productos disponibles por ahora.</p>";
-                return;
-            }
-
-            productos.forEach(p => {
-                // Creamos la card con tu estilo Apple
-                const card = document.createElement('div');
-                card.className = 'product-card-apple';
-                
-                // Al hacer clic, abre tu modal existente con los datos de la BD
-                card.onclick = () => openModal(p.nombre, p.precio, p.descripcion || 'Producto oficial R12 Sports.', p.imagen_url);
-
-                card.innerHTML = `
-                    <div class="img-placeholder">
-                        <img src="${p.imagen_url}" alt="${p.nombre}" onerror="this.src='../Imagenes/LogoT.jpg'">
-                    </div>
-                    <h3 class="product-name">${p.nombre}</h3>
-                    <p class="product-price">Q ${parseFloat(p.precio).toFixed(2)}</p>
-                    <button class="btn-apple">Ver Detalles</button>
-                `;
-                grid.appendChild(card);
-            });
-        })
-        .catch(err => {
-            console.error("Error al cargar productos:", err);
-            grid.innerHTML = "<p style='color: red;'>Error al conectar con el servidor.</p>";
-        });
-}
 
 
 let productosOriginales = []; // Guardamos la lista completa para el buscador
@@ -311,7 +236,7 @@ let productosOriginales = []; // Guardamos la lista completa para el buscador
 function cargarProductosDesdeBD() {
     const grid = document.getElementById('product-grid-db');
     
-    fetch('http://localhost:3000/productos')
+    fetch('/productos')
         .then(response => response.json())
         .then(productos => {
             productosOriginales = productos; // Backup para el buscador
@@ -339,7 +264,7 @@ function renderizarProductos(lista) {
 
         card.innerHTML = `
             <div class="img-placeholder">
-                <img src="${p.imagen_url}" alt="${p.nombre}" onerror="this.src='../Imagenes/LogoT.jpg'">
+                <img src="${p.imagen_url}" alt="${p.nombre}" onerror="this.src='/Imagenes/LogoT.jpg'">
                 ${!tieneStock ? '<span class="badge-agotado">Agotado</span>' : ''}
             </div>
             <h3 class="product-name">${p.nombre}</h3>
