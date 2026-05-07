@@ -112,7 +112,7 @@ function cargarDatos() {
         .then(r => r.json())
         .then(data => {
             dineroActual = parseFloat(data.dinero_actual || 0);
-            document.getElementById("dinero-actual").textContent = "Dinero actual: Q" + dineroActual.toFixed(2);
+            document.getElementById("dinero-actual").textContent = "Saldo actual: Q" + dineroActual.toFixed(2);
         });
 
     // 2. Traer los productos
@@ -274,7 +274,7 @@ function buscar() {
 
 // ================= DINERO =================
 function actualizarDinero() {
-    document.getElementById("dinero-actual").textContent = "Dinero actual: Q" + dineroActual.toFixed(2);
+    document.getElementById("dinero-actual").textContent = "Saldo actual: Q" + dineroActual.toFixed(2);
     
     // Guardar en la nube (MySQL)
     fetch("/balance", {
