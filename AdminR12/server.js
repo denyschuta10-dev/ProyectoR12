@@ -19,7 +19,7 @@ app.use(express.static(__dirname));
 // Usamos path.join para que funcione tanto en Windows como en Linux (Render/Railway)
 app.use('/TiendaR12', express.static(path.join(__dirname, '../TiendaR12')));
 app.use('/AcademiaR12', express.static(path.join(__dirname, '../AcademiaR12')));
-app.use('/Imagenes', express.static(path.join(__dirname, '../Imagenes')));
+app.use('/Imagenes', express.static(path.join(__dirname, 'Imagenes')));
 
 // C. Servir la carpeta de subidas de fotos
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
