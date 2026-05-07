@@ -1,0 +1,455 @@
+/* =========================================
+   VARIABLES
+   ========================================= */
+:root {
+    --r12-blue: #007AFF;
+    --r12-dark: #000000;
+    --r12-card: #1C1C1E;
+    --r12-gold: #D4AF37;
+    --r12-white: #F5F5F7;
+    --r12-text-secondary: #86868B;
+    --r12-glass: rgba(28, 28, 30, 0.7);
+    --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* =========================================
+   BASE + FONDO PRO
+   ========================================= */
+body {
+    margin: 0;
+    color: var(--r12-white);
+    font-family: 'SF Pro Display', 'Inter', -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+
+    background-color: #000;
+
+    /* 🔥 fondo distribuido en TODA la página */
+    background-image:
+        radial-gradient(circle at 20% 20%, rgba(0,122,255,0.15), transparent 40%),
+        radial-gradient(circle at 80% 40%, rgba(0,122,255,0.10), transparent 50%),
+        radial-gradient(circle at 50% 80%, rgba(0,122,255,0.08), transparent 60%);
+}
+/* =========================================
+   NAVBAR
+   ========================================= */
+.academy-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5%;
+    height: 70px;
+   background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.main-logo {
+    height: 40px;
+    transition: var(--transition);
+}
+
+.logo-container:hover .main-logo {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 10px var(--r12-blue));
+}
+
+/* TEXTO LOGO PRO */
+.brand-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.accent {
+    color: var(--r12-blue);
+}
+
+/* =========================================
+   HERO
+   ========================================= */
+.academy-hero {
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
+                url('assets/image_1dac22.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+/* glow azul */
+.academy-hero::after {
+    content: "";
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(0,122,255,0.25), transparent 70%);
+    top: -100px;
+    right: -100px;
+    filter: blur(100px);
+}
+
+/* TITULO PRO */
+.slogan {
+    font-size: 4rem;
+    font-weight: 800;
+    letter-spacing: -2px;
+}
+
+/* =========================================
+   BOTONES
+   ========================================= */
+.btn-whatsapp {
+    background-color: var(--r12-white);
+    color: var(--r12-dark);
+    padding: 16px 32px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    margin-top: 40px;
+    display: inline-block;
+    transition: var(--transition);
+}
+
+.btn-whatsapp:hover {
+    background-color: var(--r12-blue);
+    color: var(--r12-white);
+    transform: scale(1.05);
+}
+
+
+.btn-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 10px 18px;
+    border-radius: 30px;
+
+    background: linear-gradient(135deg, var(--r12-blue), #0056cc);
+    color: white;
+
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+
+    box-shadow: 0 5px 15px rgba(0, 122, 255, 0.3);
+    transition: var(--transition);
+}
+
+/* Flechita */
+.btn-back::before {
+    content: "←";
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+/* Hover */
+.btn-back:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 10px 25px rgba(0, 122, 255, 0.5);
+}
+
+/* Click */
+.btn-back:active {
+    transform: scale(0.95);
+}
+
+/* =========================================
+   SECCIONES
+   ===================================  ====== */
+.content-section {
+    padding: 30px 10%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* fondo suave en secciones */
+section {
+    position: relative;
+}
+
+section::before {
+    content: "";
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(255,255,255,0.03), transparent 70%);
+    top: 0;
+    left: 0;
+    filter: blur(80px);
+}
+
+/* TITULOS */
+.section-title {
+    font-size: 2.6rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.section-title::after {
+    content: "";
+    display: block;
+    width: 40px;
+    height: 2px;
+    margin: 10px auto 0;
+    background: var(--r12-blue);
+    opacity: 0.6;
+}
+
+/* =========================================
+   HORARIO
+   ========================================= */
+#horarios .card {
+    padding: 0;
+    max-width: 650px;
+    margin: 0 auto;
+
+    border-radius: 20px;
+    overflow: hidden;
+    cursor: pointer;
+
+    transition: var(--transition);
+}
+
+#horarios .card img {
+    width: 100%;
+    height: auto; /* 🔥 mantiene proporción real */
+    display: block;
+
+    transition: var(--transition);
+}
+
+/* 🔥 EFECTO HOVER SUAVE */
+#horarios .card:hover {
+    transform: scale(1.02);
+}
+
+#horarios .card:hover img {
+    transform: scale(1.05);
+}
+/* =========================================
+   GALERÍA UNIFICADA
+   ========================================= */
+.clients-grid,
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+}
+
+.client-card,
+.video-container {
+    border-radius: 20px;
+    overflow: hidden;
+    background: var(--r12-card);
+
+    height: 420px;  /* 🔥 tamaño uniforme */
+    position: relative;
+}
+
+/* IMÁGENES */
+.client-img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 🔥 vuelve a esto */
+    transition: var(--transition);
+}
+
+.client-img-container img {
+     object-position: center;
+}
+
+/* VIDEOS */
+.video-container video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* HOVER */
+.client-card:hover img {
+    transform: scale(1.03);
+}
+
+.client-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: var(--transition);
+}
+
+/* =========================================
+   MODAL
+   ========================================= */
+/* MODAL BASE */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.95);
+    backdrop-filter: blur(10px);
+
+    justify-content: center;
+    align-items: center;
+
+    z-index: 9999;
+}
+
+
+.modal-content-pro img {
+    max-width: 85vw;
+    max-height: 85vh;
+
+    width: auto;
+    height: auto;
+
+    object-fit: contain;
+
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+
+    display: block;
+}
+
+/* BOTÓN X */
+.close {
+    position: fixed;
+    top: 20px;
+    right: 25px;
+    font-size: 40px;
+    color: white;
+    cursor: pointer;
+    z-index: 10000;
+}
+
+.close {
+    font-size: 30px;
+    top: 30px;
+    right: 40px;
+    cursor: pointer;
+}
+
+/* =========================================
+   SECCIÓN FINAL
+   ========================================= */
+.final-cta {
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.final-text {
+    font-size: 2.3rem;
+    font-weight: 800;
+    margin-bottom: 30px;
+}
+
+.final-image {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.final-image img {
+    width: 100%;
+    max-width: 800px;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    transition: var(--transition);
+}
+
+.final-image img:hover {
+    transform: scale(1.03);
+}
+
+/* FLECHAS */
+.arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 40px;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    user-select: none;
+}
+
+.arrow.left { left: 20px; }
+.arrow.right { right: 20px; }
+
+.arrow:hover {
+    color: var(--r12-blue);
+}
+
+/* MODAL CENTRADO */
+.modal-content-pro {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.modal-content-pro img {
+    max-width: 800px;      /* 🔥 igual estilo SOMOS */
+    width: 90%;
+    max-height: 80vh;      /* 🔥 no se pasa de pantalla */
+    height: auto;
+
+    object-fit: contain;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+}
+
+.modal img {
+    animation: zoomIn 0.25s ease;
+    transform-origin: center;
+}
+
+.modal.active {
+    display: flex;
+}
+
+#galleryImg {
+    max-width: 85vw;
+    max-height: 85vh;
+    object-fit: contain;
+}
+
+@keyframes zoomIn {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+@media (max-width: 768px) {
+    .section-title {
+        font-size: 2.2rem;
+    }
+
+    .slogan {
+        font-size: 2.3rem;
+    }
+}

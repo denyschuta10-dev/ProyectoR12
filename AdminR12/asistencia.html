@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academia R12 - Control de Asistencia</title>
+    <link rel="stylesheet" href="asistencia.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <aside>
+        <div class="logo-container">
+            <img src="../Imagenes/LogoA.jpg" alt="R12 Logo" class="main-logo">
+            <div class="logo-text">Academia R12</div>
+        </div>
+        <nav>
+            <a href="#" class="nav-link active">
+                <i class="fas fa-user-graduate"></i> Lista de Alumnos
+            </a>
+            <a href="#" class="nav-link" onclick="abrirModal('modalHorarios')">
+                <i class="fas fa-calendar-alt"></i> Horarios Sabatinos
+            </a>
+            <a href="#" class="nav-link" onclick="mostrarReporte()">
+                <i class="fas fa-file-invoice-dollar"></i> Reporte de Pagos
+            </a>
+        </nav>
+    </aside>
+
+    <main>
+        <div class="header">
+            <div>
+                <h1>Gestión de Academia</h1>
+                <p id="fechaDisplay">Cargando fecha...</p>
+            </div>
+            <button class="btn-add" onclick="abrirModal('modalNuevo')">
+                <i class="fas fa-plus"></i> Inscribir Alumno
+            </button>
+        </div>
+        
+        <div class="grid-alumnos" id="contenedorAlumnos"></div>
+    </main>
+
+    <div id="modalNuevo" class="modal-overlay">
+        <div class="modal-content">
+            <h3>Nueva Inscripción</h3>
+            <p style="font-size: 0.9em; color: #666;">El alumno iniciará con el mes actual en verde.</p>
+            <input type="text" id="nombreInput" placeholder="Nombre completo del alumno">
+            <button class="btn-card btn-confirmar" onclick="guardarAlumno()">Inscribir Ahora</button>
+            <button class="btn-card btn-cancelar" onclick="cerrarModal('modalNuevo')">Cancelar</button>
+        </div>
+    </div>
+
+    <div id="modalHorarios" class="modal-overlay">
+        <div class="modal-content">
+            <i class="fas fa-clock fa-3x" style="color: var(--blue); margin-bottom: 15px;"></i>
+            <h3>Horarios de Entrenamiento</h3>
+            <table class="tabla-modal">
+                <tr>
+                    <td><strong>Sábado Mañana</strong></td>
+                    <td>08:00 - 10:30</td>
+                </tr>
+                <tr>
+                    <td><strong>Sábado Tarde</strong></td>
+                    <td>14:00 - 16:30</td>
+                </tr>
+            </table>
+            <button class="btn-card btn-cancelar" onclick="cerrarModal('modalHorarios')">Cerrar</button>
+        </div>
+    </div>
+
+    <div id="modalReporte" class="modal-overlay">
+        <div class="modal-content">
+            <i class="fas fa-donate fa-3x" style="color: var(--green); margin-bottom: 15px;"></i>
+            <h3>Control de Caja</h3>
+            <div id="datosReporte" style="text-align: left; margin: 20px 0;">
+                </div>
+            <button class="btn-card btn-cancelar" onclick="cerrarModal('modalReporte')">Cerrar Reporte</button>
+        </div>
+    </div>
+
+    <div id="modalDetalle" class="modal-overlay">
+        <div class="modal-content">
+            <i class="fas fa-user-circle fa-3x" style="color: var(--blue); margin-bottom: 10px;"></i>
+            <h3 id="detalleNombre">Nombre Alumno</h3>
+            <div id="detalleInfo" style="text-align: left; margin: 15px 0; background: #f9f9f9; padding: 15px; border-radius: 12px; font-size: 0.95em;">
+                </div>
+            <button class="btn-card btn-cancelar" onclick="cerrarModal('modalDetalle')">Volver a la lista</button>
+        </div>
+    </div>
+
+    <script src="asistencia.js"></script>
+</body>
+</html>

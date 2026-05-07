@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academia R12 | Formando Campeones</title>
+    <link rel="stylesheet" href="../AcademiaR12/academia.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="academy-nav">
+    <div class="logo-container">
+        <img src="../Imagenes/LogoA.jpg" class="main-logo">
+        <span class="brand-name">Academia <span class="accent">R12</span></span>
+    </div>
+
+    <a href="../TiendaR12/index.html" class="btn-back">Volver a Tienda</a>
+</nav>
+
+<!-- HERO -->
+<header class="academy-hero">
+    <div>
+        <h1 class="slogan">
+            Disciplina. Técnica. <br>
+            <span class="accent">Victoria.</span>
+        </h1>
+
+        <a href="https://wa.me/50233816134" class="btn-whatsapp">
+            Inscribirse vía WhatsApp
+        </a>
+    </div>
+</header>
+
+<!-- HORARIOS -->
+<section id="horarios" class="content-section">
+    <h2 class="section-title">Horarios de Entrenamiento</h2>
+
+    <div class="card" onclick="openGallery(['../Imagenes/horariooo.jpeg'], 0)">
+        <img src="../Imagenes/horariooo.jpeg">
+    </div>
+</section>
+
+<!-- CANCHAS -->
+<section class="content-section">
+    <h2 class="section-title">Nuestras Instalaciones</h2>
+
+    <div class="clients-grid">
+        <div class="client-card" onclick="openGallery(['../Imagenes/CS1.jpeg','../Imagenes/CS2.jpeg','../Imagenes/CS3.jpeg'], 0)">
+            <img src="../Imagenes/CS1.jpeg">
+        </div>
+
+        <div class="client-card" onclick="openGallery(['../Imagenes/CS1.jpeg','../Imagenes/CS2.jpeg','../Imagenes/CS3.jpeg'], 1)">
+            <img src="../Imagenes/CS2.jpeg">
+        </div>
+
+        <div class="client-card" onclick="openGallery(['../Imagenes/CS1.jpeg','../Imagenes/CS2.jpeg','../Imagenes/CS3.jpeg'], 2)">
+            <img src="../Imagenes/CS3.jpeg">
+        </div>
+    </div>
+</section>
+
+<!-- ALUMNOS -->
+<section class="content-section">
+    <h2 class="section-title">Nuestros Alumnos</h2>
+
+    <div class="clients-grid">
+        <div class="client-card" onclick="openGallery(['../Imagenes/Alumnos1.jpeg','../Imagenes/Alumnos2.jpeg','../Imagenes/Alumnos3.jpeg'], 0)">
+            <img src="../Imagenes/Alumnos1.jpeg">
+        </div>
+
+        <div class="client-card" onclick="openGallery(['../Imagenes/Alumnos1.jpeg','../Imagenes/Alumnos2.jpeg','../Imagenes/Alumnos3.jpeg'], 1)">
+            <img src="../Imagenes/Alumnos2.jpeg">
+        </div>
+
+        <div class="client-card" onclick="openGallery(['../Imagenes/Alumnos1.jpeg','../Imagenes/Alumnos2.jpeg','../Imagenes/Alumnos3.jpeg'], 2)">
+            <img src="../Imagenes/Alumnos3.jpeg">
+        </div>
+    </div>
+</section>
+
+<!-- VIDEOS -->
+<section class="content-section">
+    <h2 class="section-title">Nuestro Trabajo</h2>
+
+    <div class="video-grid">
+        <div class="video-container">
+            <video controls src="../Videos/Trabajo1.mp4"></video>
+        </div>
+
+        <div class="video-container">
+            <video controls src="../Videos/Trabajo2.mp4"></video>
+        </div>
+    </div>
+</section>
+
+<!-- FINAL -->
+<section class="final-cta">
+    <h2 class="final-text">#SOMOSACADEMIAR12</h2>
+
+    <div class="final-image">
+        <img src="../Imagenes/SOMOSF.jpg" onclick="openGallery(['../Imagenes/SOMOSF.jpg'], 0)">
+    </div>
+
+    <a href="https://wa.me/50233816134" class="btn-whatsapp">
+        Inscribirse / Más Información
+    </a>
+</section>
+
+<!-- MODAL -->
+<div id="galleryModal" class="modal">
+    <span class="close" onclick="closeGallery()">&times;</span>
+
+    <span class="arrow left" onclick="prevImage()">❮</span>
+    <img id="galleryImg">
+    <span class="arrow right" onclick="nextImage()">❯</span>
+</div>
+
+<script src="../TiendaR12/script.js"></script>
+</body>
+</html>

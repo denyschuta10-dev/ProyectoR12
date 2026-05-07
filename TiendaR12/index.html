@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>R12 Sports | Tienda Oficial</title>
+    <link rel="stylesheet" href="../TiendaR12/styletienda.css">
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar-tienda">
+        <div class="logo-container">
+            <img src="../Imagenes/LogoT.jpg" alt="R12 Sports" class="main-logo">
+            <span class="brand-name">R12 <strong>SPORTS</strong></span>
+        </div>
+        <div class="nav-links">
+            <a href="../TiendaR12/index.html" class="active">Tienda</a>
+            <a href="#personalizar">Personalizar</a>
+            <a href="#clientes">Comunidad</a>
+            <a href="../AcademiaR12/academia.html">Academia</a>
+            <div class="cart-icon-container" onclick="toggleCarrito()">
+                <svg class="cart-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="9" cy="21" r="1"></circle>
+                    <circle cx="20" cy="21" r="1"></circle>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                </svg>
+                <span id="cart-count">0</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- CARRITO LATERAL -->
+    <div id="side-cart" class="side-cart">
+        <div class="cart-header">
+            <h2>Mi Pedido</h2>
+            <span class="close-cart" onclick="toggleCarrito()">&times;</span>
+        </div>
+        <div id="cart-items" class="cart-items"></div>
+        <div class="cart-footer">
+            <div class="total-row">
+                <span>Total:</span>
+                <span id="cart-total">Q 0.00</span>
+            </div>
+            <button class="btn-whatsapp-buy" onclick="comprarCarritoWhatsApp()">
+                Finalizar Pedido por WhatsApp
+            </button>
+        </div>
+    </div>
+
+    <!-- SECCIÓN TIENDA -->
+    <header class="shop-header">
+        <h1>Equipamiento de Alto Rendimiento</h1>
+        <p>Calidad premium para deportistas de élite.</p>
+    </header>
+    
+    <div class="search-wrapper">
+    <div class="search-box">
+        <input type="text" id="search-tienda" placeholder="Buscar camisolas, calzado, accesorios...">
+    </div>
+</div>
+
+<main class="shop-container">
+    <div class="product-grid" id="product-grid-db">
+        <p style="color: white; text-align: center;">Cargando equipamiento de élite...</p>
+    </div>
+</main>
+
+    <!-- SECCIÓN PERSONALIZAR -->
+    <section id="personalizar" class="custom-section">
+    <div class="custom-container">
+
+        <!-- LADO IZQUIERDO (INFO + LOGO) -->
+        <div class="custom-left">
+
+    <div class="custom-header">
+        <img src="../Imagenes/LogoT.jpg" class="custom-logo">
+
+        <div class="custom-text">
+            <h2>Personalizamos tu Camisola</h2>
+            <p>
+                Diseña tu estilo único con R12 Sports. 
+                Agrega tu nombre, número y juega como un profesional.
+            </p>
+        </div>
+    </div>
+
+</div>
+
+        <!-- LADO DERECHO (FORMULARIO) -->
+        <div class="custom-right">
+            <div class="custom-form">
+                <input type="text" id="custom-name" placeholder="Nombre en la espalda">
+                <input type="number" id="custom-number" placeholder="Número">
+
+                <select id="custom-size">
+                    <option value="S">Talla S</option>
+                    <option value="M">Talla M</option>
+                    <option value="L">Talla L</option>
+                    <option value="XL">Talla XL</option>
+                </select>
+
+                <button class="btn-apple" onclick="pedirPersonalizado()">
+                    Enviar a WhatsApp
+                </button>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+    <!-- SECCIÓN CLIENTES (GALERÍA) -->
+    <section id="clientes" class="clients-section">
+        <h2>Nuestra Comunidad</h2>
+        <div class="clients-grid">
+            <div class="client-card" onclick="openClientModal('../Imagenes/Cliente1.jpg')">
+                <div class="client-img-container"><img src="../Imagenes/Cliente1.jpg" alt="Cliente R12"></div>
+            </div>
+            <div class="client-card" onclick="openClientModal('../Imagenes/Cliente2.jpg')">
+                <div class="client-img-container"><img src="../Imagenes/Cliente2.jpg" alt="Cliente R12"></div>
+            </div>
+            <div class="client-card" onclick="openClientModal('../Imagenes/Cliente3.jpg')">
+                <div class="client-img-container"><img src="../Imagenes/Cliente3.jpg" alt="Cliente R12"></div>
+            </div>
+            <div class="client-card" onclick="openClientModal('../Imagenes/Cliente4.jpg')">
+                <div class="client-img-container"><img src="../Imagenes/Cliente4.jpg" alt="Cliente R12"></div>
+            </div>
+            <div class="client-card" onclick="openClientModal('../Imagenes/Cliente5.jpg')">
+                <div class="client-img-container"><img src="../Imagenes/Cliente5.jpg" alt="Cliente R12"></div>
+            </div>
+             <div class="client-card" onclick="openClientModal('../Imagenes/Cliente6.jpg')">
+                <div class="client-img-container"><img src="../Imagenes/Cliente6.jpg" alt="Cliente R12"></div>
+            </div>
+             <div class="client-card" onclick="openClientModal('../Imagenes/Cliente7.jpg')">
+                <div class="client-img-container"><img src="../Imagenes/Cliente7.jpg" alt="Cliente R12"></div>
+            </div>
+             <div class="client-card" onclick="openClientModal('../Imagenes/Cliente8.jpg')">
+                <div class="client-img-container"><img src="../Imagenes/Cliente8.jpg" alt="Cliente R12"></div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- MODAL DE PRODUCTO -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div class="modal-body">
+                <div class="modal-img-container"><img id="modalImg" src=""></div>
+                <div class="modal-info">
+                    <h2 id="modalTitle"></h2>
+                    <p id="modalPriceLabel" class="modal-price-text"></p>
+                    <p id="modalDesc"></p>
+                    <div class="modal-actions">
+                        <button class="btn-add-cart" onclick="agregarAlCarritoDesdeModal()">Agregar al Carrito</button>
+                        <button class="btn-quick-buy" onclick="sendWhatsAppDirecto()">Compra Rápida WhatsApp</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE CLIENTES (SÓLO IMAGEN AGRANDADA) -->
+<div id="clientModal" class="modal">
+    <div class="modal-content client-modal-zoom">
+
+        <span class="close" onclick="closeClientModal()">&times;</span>
+
+        <!-- 🔥 FLECHA IZQUIERDA -->
+        <span class="arrow left" onclick="prevClientImage()">&#10094;</span>
+
+        <div class="modal-body">
+            <div class="modal-img-full">
+                <img id="clientModalImg" src="" style="width: 100%; border-radius: 15px;">
+            </div>
+        </div>
+
+        <!-- 🔥 FLECHA DERECHA -->
+        <span class="arrow right" onclick="nextClientImage()">&#10095;</span>
+
+    </div>
+</div>
+
+    <script src="../TiendaR12/script.js"></script>
+</body>
+</html>
