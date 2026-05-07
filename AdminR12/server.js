@@ -16,15 +16,11 @@ app.use(express.json());
 app.use(express.static(__dirname));
 
 // B. Servir Tienda y Academia (Un nivel arriba)
-// Usamos path.join para que funcione tanto en Windows como en Linux (Render/Railway)
 app.use('/TiendaR12', express.static(path.join(__dirname, 'TiendaR12')));
 
-app.use('/AcademiaR12', express.static(path.join(__dirname, 'AcademiaR12')));
+app.use('/Imagenes', express.static(path.resolve(__dirname, 'Imagenes')));
 
-app.use('/Imagenes', express.static(path.join(__dirname, 'Imagenes')));
-
-// C. Servir la carpeta de subidas de fotos
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+console.log("Ruta imágenes:", path.resolve(__dirname, 'Imagenes'));
 
 // D. RUTA PRINCIPAL
 app.get('/', (req, res) => {
@@ -127,7 +123,6 @@ app.listen(PORT, () => {
 });
 
 
-
 // Configuración de dónde y cómo se guardan los archivos
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -151,20 +146,6 @@ app.post('/upload-image', upload.single('imagen'), (req, res) => {
 });
 
 
-// Ruta para actualizar (server.js)
-app.put("/productos/:id", (req, res) => {
-    const { id } = req.params;
-    const { codigo, nombre, cantidad, precio, imagen_url, descripcion } = req.body;
-
-    const sql = `UPDATE productos SET codigo=?, nombre=?, cantidad=?, precio=?, imagen_url=?, descripcion=? WHERE id=?`;
-
-    conexion.query(sql, [codigo, nombre, cantidad, precio, imagen_url, descripcion, id], (err) => {
-        if (err) return res.status(500).json({ error: err.message });
-        res.json({ mensaje: "Producto actualizado" });
-    });
-});
-
-
 
 
 // ==========================================
@@ -173,51 +154,46 @@ app.put("/productos/:id", (req, res) => {
 
 // --- RUTAS PARA ASISTENCIA ---
 
-// 1. Obtener lista
+
+// ================= CONTROL DE ASISTENCIA =================
+
+// 1. Obtener alumnos
 app.get("/alumnos", (req, res) => {
-    conexion.query("SELECT * FROM alumnos", (err, results) => {
+    const sql = "SELECT id, nombre, asistencias, DATE_FORMAT(fecha_pago, '%Y-%m-%d') as fecha_pago FROM alumnos";
+    conexion.query(sql, (err, results) => {
         if (err) return res.status(500).send(err);
         res.json(results);
     });
 });
 
-// 2. Inscribir (Agregamos CURDATE() para que nazca en VERDE)
-// En server.js
-// En server.js
+// 2. Inscribir alumno
 app.post("/alumnos", (req, res) => {
     const { nombre } = req.body;
-    // Esto hace que desde el segundo 1 ya tengan fecha de pago
+
     const sql = "INSERT INTO alumnos (nombre, asistencias, fecha_pago) VALUES (?, 0, CURDATE())";
+
     conexion.query(sql, [nombre], (err) => {
         if (err) return res.status(500).send(err);
         res.send("Alumno inscrito con éxito");
     });
 });
 
+// 3. Marcar asistencia
 app.put("/alumnos/asistencia/:id", (req, res) => {
-    // Ahora el límite es 5 para cubrir los meses largos
     const sql = "UPDATE alumnos SET asistencias = asistencias + 1 WHERE id = ? AND asistencias < 5";
-    conexion.query(sql, [req.params.id], (err, result) => {
+
+    conexion.query(sql, [req.params.id], (err) => {
         if (err) return res.status(500).send(err);
         res.send("Asistencia marcada");
     });
 });
 
-// 4. Pagar mensualidad (Actualizamos la fecha a hoy)
+// 4. Pagar mensualidad
 app.put("/alumnos/pagar/:id", (req, res) => {
-    // IMPORTANTE: asistencias vuelve a 0 y fecha_pago se vuelve HOY
     const sql = "UPDATE alumnos SET asistencias = 0, fecha_pago = CURDATE() WHERE id = ?";
+
     conexion.query(sql, [req.params.id], (err) => {
         if (err) return res.status(500).send(err);
         res.send("Pago realizado");
-    }); 
-});
-
-app.get("/alumnos", (req, res) => {
-    // Forzamos a que la fecha salga como texto YYYY-MM-DD
-    const sql = "SELECT id, nombre, asistencias, DATE_FORMAT(fecha_pago, '%Y-%m-%d') as fecha_pago FROM alumnos";
-    conexion.query(sql, (err, results) => {
-        if (err) return res.status(500).send(err);
-        res.json(results);
     });
 });
