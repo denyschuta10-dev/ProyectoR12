@@ -298,22 +298,40 @@ function cargarRegistros() {
     fetch("/actividades")
     .then(r => r.json())
     .then(data => {
+
+        console.log("ACTIVIDADES:", data);
+
         const lista = document.getElementById("registro-lista");
         lista.innerHTML = "";
+
+        // Verificar si realmente es un array
+        if (!Array.isArray(data)) {
+            console.error("Error: la API no devolvió un array");
+            return;
+        }
+
         data.forEach(act => {
             const li = document.createElement("li");
+
             const fecha = new Date(act.fecha).toLocaleString();
+
             li.textContent = `[${fecha}] ${act.texto}`;
-            
+
             li.addEventListener("click", () => {
-                abrirModalActividad({ texto: act.texto, fecha: fecha });
+                abrirModalActividad({
+                    texto: act.texto,
+                    fecha: fecha
+                });
             });
 
             lista.appendChild(li);
         });
+
+    })
+    .catch(err => {
+        console.error("Error cargando actividades:", err);
     });
 }
-
 
 // ================= MODALES =================
 // Ver detalles con descripción incluida
