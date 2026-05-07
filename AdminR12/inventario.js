@@ -531,16 +531,29 @@ document.getElementById("btn-guardar-final").onclick = async () => {
         body: JSON.stringify(payload)
     })
     .then(res => {
-        if (res.ok) {
-            alert(mensaje);
-            // Limpiar todo
-            editandoID = null;
-            document.getElementById("form-codigo").disabled = false;
-            document.getElementById("modal-titulo-registro").innerText = "Nuevo Producto";
-            document.getElementById("modal-agregar").classList.remove("activo");
-            verInventario();
+    if (res.ok) {
+
+        alert(mensaje);
+
+        // 🔥 REGISTRAR ACTIVIDAD
+        if (metodo === "POST") {
+            agregarRegistro("Producto agregado: " + nombre);
+        } else {
+            agregarRegistro("Producto editado: " + nombre);
         }
-    });
+
+        // Limpiar todo
+        editandoID = null;
+
+        document.getElementById("form-codigo").disabled = false;
+
+        document.getElementById("modal-titulo-registro").innerText = "Nuevo Producto";
+
+        document.getElementById("modal-agregar").classList.remove("activo");
+
+        verInventario();
+    }
+});
 };
 
 // Cerrar el modal de agregar
