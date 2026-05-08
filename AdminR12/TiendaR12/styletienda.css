@@ -676,11 +676,11 @@ body{
     height:auto;
 }
 
-.custom-text h2{
-    font-size:4rem;
-    font-weight:800;
-    letter-spacing:-2px;
-    margin-bottom:15px;
+.custom-text h2 {
+    font-size: 2.8rem;
+    font-weight: 800;
+    letter-spacing: -2px;
+    margin-bottom: 15px;
 }
 
 .custom-text p{
@@ -978,5 +978,60 @@ body{
 
     .shop-header h1{
         font-size:2rem;
+    }
+}
+
+/* =========================================
+   PERSONALIZAR RESPONSIVE TELÉFONO
+========================================= */
+@media (max-width: 768px) {
+
+    #personalizar {
+        padding: 70px 20px;
+        min-height: auto;
+    }
+
+    .custom-container {
+        flex-direction: column;
+        gap: 40px;
+        text-align: center;
+    }
+
+    .custom-left,
+    .custom-right {
+        width: 100%;
+        min-width: 100%;
+    }
+
+    .custom-header {
+        justify-content: center;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .custom-logo {
+        width: 140px;
+    }
+
+    .custom-text h2 {
+        font-size: 2.2rem;
+        line-height: 1.1;
+    }
+
+    .custom-text p {
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+
+    .custom-form {
+        width: 100%;
+    }
+
+    .custom-form input,
+    .custom-form select,
+    .custom-form button {
+        width: 100%;
+        font-size: 1rem;
+        padding: 16px;
     }
 }
