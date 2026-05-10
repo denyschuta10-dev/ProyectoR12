@@ -929,3 +929,79 @@ h1 {
     border-radius: 16px;
     font-weight: 700;
 }
+
+/* =========================
+   BOTONES ADMIN IGUALES
+========================= */
+
+#btn-crear-vendedor,
+#btn-ver-usuarios{
+    background: white;
+    color: black;
+
+    border: 2px solid #00A862; /* MARCO VERDE */
+
+    padding: 14px 22px;
+    border-radius: 16px;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    transition: 0.3s ease;
+
+    box-shadow:
+        0 6px 18px rgba(0,168,98,0.18);
+}
+
+#btn-crear-vendedor:hover,
+#btn-ver-usuarios:hover{
+    background: #00A862;
+    color: white;
+
+    transform: translateY(-3px) scale(1.03);
+
+    box-shadow:
+        0 10px 24px rgba(0,168,98,0.35);
+}
+
+
+/* =========================
+   BUSCADOR NUEVO
+========================= */
+
+.buscador-productos{
+    width: 420px;
+    height: 58px;
+
+    background: white; /* ADENTRO BLANCO */
+    color: black;      /* LETRAS NEGRAS */
+
+    border: 3px solid black; /* MARCO NEGRO */
+
+    border-radius: 18px;
+
+    padding: 0 20px;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    outline: none;
+
+    transition: 0.3s ease;
+
+    box-shadow:
+        0 6px 18px rgba(0,0,0,0.12);
+}
+
+.buscador-productos::placeholder{
+    color: #666;
+}
+
+.buscador-productos:focus{
+    transform: scale(1.02);
+
+    border-color: #00A862;
+
+    box-shadow:
+        0 0 0 5px rgba(0,168,98,0.15);
+}
