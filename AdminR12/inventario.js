@@ -150,6 +150,7 @@ function verificarSesion() {
     aplicarPermisos();
 }
 
+
 function aplicarPermisos() {
 
     const rol = sessionStorage.getItem("rol");
@@ -167,6 +168,12 @@ function aplicarPermisos() {
 
         document.getElementById("btn-ver-usuarios")
         .style.display = "none";
+
+        // 🔥 OCULTAR TODOS LOS BOTONES EDITAR
+        document.querySelectorAll(".btn-editar-mini")
+        .forEach(btn => {
+            btn.style.display = "none";
+        });
     }
 }
 
@@ -249,7 +256,11 @@ function verInventario() {
                 prepararEdicion(p);  // Pasamos el objeto directamente sin stringify
             };
 
-            div.appendChild(btnEditar);
+            const rol = sessionStorage.getItem("rol");
+
+if (rol !== "vendedor") {
+    div.appendChild(btnEditar);
+}
             div.onclick = () => abrirModalProducto(p);
             cont.appendChild(div);
         });
