@@ -786,11 +786,17 @@ h1 {
 }
 
 .buscador-productos{
-    width: 100%;
-    max-width: 300px;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 10px;
-    border: 1px solid #ccc;
+    width: 250px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 12px;
     outline: none;
+    background: #1f1f1f;
+    color: white;
+    font-size: 15px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+.buscador-productos::placeholder{
+    color: #aaa;
 }

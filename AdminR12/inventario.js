@@ -758,3 +758,42 @@ function crearBuscador() {
         });
     });
 }
+
+
+function guardarVendedor() {
+
+    const nombre = document.getElementById("v-nombre").value;
+    const usuario = document.getElementById("v-usuario").value;
+    const clave = document.getElementById("v-clave").value;
+
+    if (!nombre || !usuario || !clave) {
+        alert("⚠️ Completa todos los campos");
+        return;
+    }
+
+    fetch("/usuarios", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            nombre,
+            usuario,
+            clave,
+            rol: "vendedor"
+        })
+    })
+    .then(r => r.json())
+    .then(data => {
+
+        if (data.error) {
+            alert(data.error);
+            return;
+        }
+
+        alert("✅ Vendedor creado");
+
+        document.getElementById("modal-crear-vendedor")
+        .classList.remove("activo");
+
+        verUsuarios();
+    });
+}
