@@ -1000,7 +1000,7 @@ h1 {
 .buscador-productos:focus{
     transform: scale(1.02);
 
-    border-color: #00A862;
+    border-color: #000000;
 
     box-shadow:
         0 0 0 5px rgba(0,168,98,0.15);
