@@ -66,6 +66,15 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // BOTÓN DE SALIR (Asegúrate de que esta línea esté tal cual)
     document.getElementById("btn-salir").addEventListener("click", salir);
+    
+    document.getElementById("btn-crear-vendedor")
+.addEventListener("click", crearVendedor);
+
+document.getElementById("btn-ver-usuarios")
+.addEventListener("click", verUsuarios);
+
+document.getElementById("close-modal-usuarios")
+.addEventListener("click", cerrarModalUsuarios);
 
 // ... rest of DOMContentLoaded
 
@@ -74,21 +83,67 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // ================= LOGIN =================
 function login() {
+
     const u = document.getElementById("login-usuario").value;
+
     const c = document.getElementById("login-clave").value;
 
-    if (u === "Rony" && c === "Admin12") {
-        sessionStorage.setItem("sesion", "true");
-        sessionStorage.setItem("usuario", u);
+    fetch("/login", {
 
-        document.getElementById("login-section").style.display = "none";
-        document.querySelector("main").style.display = "block";
-        document.querySelector("aside").style.display = "flex";
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+            usuario: u,
+            clave: c
+        })
+
+    })
+    .then(r => r.json())
+    .then(data => {
+
+        if (data.error) {
+
+            document.getElementById("login-error")
+            .style.display = "block";
+
+            document.getElementById("login-error")
+            .innerText = data.error;
+
+            return;
+        }
+
+        sessionStorage.setItem("sesion", "true");
+
+        sessionStorage.setItem("usuario", data.usuario);
+
+        sessionStorage.setItem("rol", data.rol);
+
+        document.getElementById("login-section")
+        .style.display = "none";
+
+        document.querySelector("main")
+        .style.display = "block";
+
+        document.querySelector("aside")
+        .style.display = "flex";
+
+        aplicarPermisos();
 
         cargarDatos();
-    } else {
-        document.getElementById("login-error").style.display = "block";
-    }
+
+    })
+    .catch(err => {
+
+        console.log(err);
+
+        alert("Error conectando con el servidor");
+
+    });
+
 }
 
 
@@ -101,6 +156,28 @@ function verificarSesion() {
         cargarDatos();
     } else {
         document.getElementById("login-section").style.display = "flex";
+    }
+
+    aplicarPermisos();
+}
+
+function aplicarPermisos() {
+
+    const rol = sessionStorage.getItem("rol");
+
+    if (rol === "vendedor") {
+
+        document.getElementById("btn-agregar")
+        .style.display = "none";
+
+        document.getElementById("btn-eliminar")
+        .style.display = "none";
+
+        document.getElementById("btn-crear-vendedor")
+        .style.display = "none";
+
+        document.getElementById("btn-ver-usuarios")
+        .style.display = "none";
     }
 }
 
@@ -289,7 +366,11 @@ function agregarRegistro(texto) {
     fetch("/actividades", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ texto: texto })
+        body: JSON.stringify({
+    texto:
+    sessionStorage.getItem("usuario") +
+    ": " + texto
+})
     }).then(() => cargarRegistros());
 }
 
@@ -564,3 +645,96 @@ document.getElementById("close-modal-agregar").onclick = () => {
     document.getElementById("form-codigo").disabled = false;
     document.getElementById("modal-titulo-registro").innerText = "Nuevo Producto";
 };
+
+
+function crearVendedor() {
+
+    const nombre = prompt("Nombre del vendedor:");
+    if (!nombre) return;
+
+    const usuario = prompt("Usuario:");
+    if (!usuario) return;
+
+    const clave = prompt("Contraseña:");
+    if (!clave) return;
+
+    fetch("/usuarios", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+            nombre,
+            usuario,
+            clave,
+            rol: "vendedor"
+        })
+    })
+    .then(r => r.json())
+    .then(data => {
+
+        if (data.error) {
+            alert(data.error);
+            return;
+        }
+
+        alert("✅ Vendedor creado");
+    });
+}
+
+function verUsuarios() {
+
+    fetch("/usuarios")
+    .then(r => r.json())
+    .then(data => {
+
+        const tabla =
+        document.getElementById("tabla-usuarios");
+
+        tabla.innerHTML = "";
+
+        data.forEach(u => {
+
+            tabla.innerHTML += `
+                <tr>
+                    <td>${u.id}</td>
+                    <td>${u.nombre}</td>
+                    <td>${u.usuario}</td>
+                    <td>${u.rol}</td>
+                    <td>
+                        <button onclick="eliminarUsuario(${u.id})">
+                            Eliminar
+                        </button>
+                    </td>
+                </tr>
+            `;
+        });
+
+        document.getElementById("modal-usuarios")
+        .classList.add("activo");
+    });
+}
+
+function eliminarUsuario(id) {
+
+    const confirmar =
+    confirm("¿Eliminar vendedor?");
+
+    if (!confirmar) return;
+
+    fetch("/usuarios/" + id, {
+        method: "DELETE"
+    })
+    .then(() => {
+        verUsuarios();
+    });
+}
+
+function cerrarModalUsuarios() {
+
+    document.getElementById("modal-usuarios")
+    .classList.remove("activo");
+}

@@ -31,6 +31,98 @@ app.get('/', (req, res) => {
 
 
 const conexion = require('./db');
+// ================= LOGIN =================
+
+app.post("/login", (req, res) => {
+
+    const { usuario, clave } = req.body;
+
+    const sql = `
+        SELECT * FROM usuarios
+        WHERE usuario = ? AND clave = ?
+    `;
+
+    conexion.query(sql, [usuario, clave], (err, data) => {
+
+        if (err)
+            return res.status(500).json({ error: err.message });
+
+        if (data.length === 0) {
+            return res.json({ error: "Datos incorrectos" });
+        }
+
+        res.json({
+            usuario: data[0].usuario,
+            nombre: data[0].nombre,
+            rol: data[0].rol
+        });
+    });
+});
+
+// ================= USUARIOS =================
+
+// VER USUARIOS
+app.get("/usuarios", (req, res) => {
+
+    conexion.query(
+        "SELECT id, nombre, usuario, rol FROM usuarios",
+        (err, data) => {
+
+            if (err)
+                return res.status(500).json({ error: err.message });
+
+            res.json(data);
+        }
+    );
+});
+
+// CREAR VENDEDOR
+app.post("/usuarios", (req, res) => {
+
+    const { nombre, usuario, clave, rol } = req.body;
+
+    const sql = `
+        INSERT INTO usuarios
+        (nombre, usuario, clave, rol)
+        VALUES (?, ?, ?, ?)
+    `;
+
+    conexion.query(
+        sql,
+        [nombre, usuario, clave, rol],
+        (err) => {
+
+            if (err)
+                return res.status(500).json({
+                    error: "Usuario ya existe"
+                });
+
+            res.json({
+                mensaje: "Vendedor creado"
+            });
+        }
+    );
+});
+
+// ELIMINAR USUARIO
+app.delete("/usuarios/:id", (req, res) => {
+
+    conexion.query(
+        "DELETE FROM usuarios WHERE id = ?",
+        [req.params.id],
+        (err) => {
+
+            if (err)
+                return res.status(500).json({
+                    error: err.message
+                });
+
+            res.json({
+                mensaje: "Usuario eliminado"
+            });
+        }
+    );
+});
 
 
 

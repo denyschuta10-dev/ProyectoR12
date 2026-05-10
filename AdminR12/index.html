@@ -33,6 +33,16 @@
                 <img src="/Imagenes/LogoT.jpg" alt="logo">
             </div>
 
+            <button id="btn-crear-vendedor">
+    <i class="fas fa-user-plus"></i>
+    <span>Crear vendedor</span>
+</button>
+
+<button id="btn-ver-usuarios">
+    <i class="fas fa-users"></i>
+    <span>Ver vendedores</span>
+</button>
+
             <button id="btn-salir">
                 <i class="fas fa-sign-out-alt"></i>
                 <span>Salir</span>
@@ -125,6 +135,31 @@
     </div>
 
     <input type="file" id="input-galeria-oculto" accept="image/*" style="display: none;">
+
+    <div id="modal-usuarios" class="modal">
+    <div class="modal-contenido">
+
+        <span class="modal-close"
+        id="close-modal-usuarios">&times;</span>
+
+        <h2>Vendedores del Sistema</h2>
+
+        <table style="width:100%; margin-top:20px;">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Usuario</th>
+                    <th>Rol</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+
+            <tbody id="tabla-usuarios"></tbody>
+        </table>
+
+    </div>
+</div>
 
     <script src="inventario.js" defer></script>
 </body>
