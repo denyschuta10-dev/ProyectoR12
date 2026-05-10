@@ -219,12 +219,124 @@ h1 {
 /* ===============================
    BOTONES SECUNDARIOS
 =============================== */
-.acciones-secundarias {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  margin-bottom: 30px;
-  flex-wrap: wrap;
+/* =========================
+   ACCIONES SECUNDARIAS
+========================= */
+.acciones-secundarias{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 25px 0;
+    flex-wrap: wrap;
+}
+
+/* =========================
+   BUSCADOR PREMIUM
+========================= */
+.buscador-productos{
+    width: 320px;
+    padding: 14px 18px;
+    border-radius: 18px;
+    border: 1px solid rgba(255,255,255,0.08);
+    
+    background: rgba(25,25,25,0.95);
+    backdrop-filter: blur(10px);
+
+    color: #fff;
+    font-size: 15px;
+    font-weight: 500;
+
+    outline: none;
+
+    transition: all 0.25s ease;
+
+    box-shadow:
+        0 4px 20px rgba(0,0,0,0.25),
+        inset 0 1px 0 rgba(255,255,255,0.04);
+}
+
+/* Placeholder */
+.buscador-productos::placeholder{
+    color: #8e8e93;
+    font-weight: 400;
+}
+
+/* Hover */
+.buscador-productos:hover{
+    border-color: rgba(0, 168, 98, 0.35);
+
+    box-shadow:
+        0 0 0 4px rgba(0,168,98,0.08),
+        0 8px 25px rgba(0,0,0,0.35);
+}
+
+/* Focus */
+.buscador-productos:focus{
+    border-color: #00A862;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 0 0 5px rgba(0,168,98,0.18),
+        0 12px 30px rgba(0,0,0,0.45);
+}
+
+/* =========================
+   BOTONES MÁS MODERNOS
+========================= */
+.acciones-secundarias button{
+    padding: 13px 18px;
+    border: none;
+    border-radius: 16px;
+
+    background: linear-gradient(
+        135deg,
+        #00704A,
+        #00A862
+    );
+
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: all 0.25s ease;
+
+    box-shadow:
+        0 6px 18px rgba(0,112,74,0.35);
+}
+
+/* Hover botones */
+.acciones-secundarias button:hover{
+    transform: translateY(-3px) scale(1.02);
+
+    box-shadow:
+        0 12px 25px rgba(0,168,98,0.4);
+}
+
+/* Click */
+.acciones-secundarias button:active{
+    transform: scale(0.96);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media(max-width:768px){
+
+    .acciones-secundarias{
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .buscador-productos{
+        width: 100%;
+    }
+
+    .acciones-secundarias button{
+        width: 100%;
+    }
 }
 
 .acciones-secundarias button {
@@ -354,7 +466,7 @@ h1 {
   max-height: 800px;
   overflow-y: auto;
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
   gap: 10px;
 }
 

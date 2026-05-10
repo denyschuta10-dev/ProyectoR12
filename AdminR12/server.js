@@ -77,6 +77,7 @@ app.get("/usuarios", (req, res) => {
 });
 
 // CREAR VENDEDOR
+// CREAR VENDEDOR
 app.post("/usuarios", (req, res) => {
 
     const { nombre, usuario, clave, rol } = req.body;
@@ -90,20 +91,31 @@ app.post("/usuarios", (req, res) => {
     conexion.query(
         sql,
         [nombre, usuario, clave, rol],
-        (err) => {
+        (err, result) => {
 
-            if (err)
+            if (err) {
+
+                console.log(err);
+
+                // Usuario duplicado
+                if (err.code === "ER_DUP_ENTRY") {
+                    return res.status(400).json({
+                        error: "⚠️ El usuario ya existe"
+                    });
+                }
+
+                // Otro error
                 return res.status(500).json({
-                    error: "Usuario ya existe"
+                    error: "❌ Error del servidor"
                 });
+            }
 
             res.json({
-                mensaje: "Vendedor creado"
+                mensaje: "✅ Vendedor creado correctamente"
             });
         }
     );
 });
-
 // ELIMINAR USUARIO
 app.delete("/usuarios/:id", (req, res) => {
 
@@ -128,7 +140,7 @@ app.delete("/usuarios/:id", (req, res) => {
 
 // Obtener todos los productos (Para mostrar el inventario)
 app.get("/productos", (req, res) => {
-    const query = "SELECT * FROM productos";
+    const query = "SELECT * FROM productos WHERE eliminado = 0";
     conexion.query(query, (err, data) => {
         if (err) return res.status(500).json({ error: err.message });
         res.json(data);
@@ -166,11 +178,24 @@ app.put("/productos/:id", (req, res) => {
 
 // Eliminar producto
 app.delete("/productos/:id", (req, res) => {
+
     const { id } = req.params;
-    conexion.query("DELETE FROM productos WHERE id = ?", [id], (err) => {
-        if (err) return res.status(500).json({ error: err.message });
-        res.json({ mensaje: "Producto eliminado del sistema" });
-    });
+
+    conexion.query(
+        "UPDATE productos SET eliminado = 1 WHERE id = ?",
+        [id],
+        (err) => {
+
+            if (err)
+                return res.status(500).json({
+                    error: err.message
+                });
+
+            res.json({
+                mensaje: "Producto eliminado"
+            });
+        }
+    );
 });
 
 // ================= RUTAS DE BALANCE (DINERO) =================
