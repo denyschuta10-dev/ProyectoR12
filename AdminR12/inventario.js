@@ -63,6 +63,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     document.getElementById("btn-guardar-vendedor")?.addEventListener("click", guardarVendedor);
+
+    crearBuscador();
 });
 
 
@@ -729,4 +731,22 @@ function cerrarModalUsuarios() {
 
     document.getElementById("modal-usuarios")
     .classList.remove("activo");
+}
+
+function crearBuscador() {
+    const buscador = document.createElement("input");
+    buscador.placeholder = "Buscar producto...";
+    buscador.classList.add("buscador-productos");
+
+    const contSec = document.querySelector(".acciones-secundarias");
+    contSec.prepend(buscador);
+
+    buscador.addEventListener("input", () => {
+        const valor = buscador.value.toLowerCase();
+
+        document.querySelectorAll(".tarjeta").forEach(card => {
+            const texto = card.innerText.toLowerCase();
+            card.style.display = texto.includes(valor) ? "block" : "none";
+        });
+    });
 }

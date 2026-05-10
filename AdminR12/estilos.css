@@ -784,3 +784,13 @@ h1 {
 #modal-crear-vendedor.activo {
     display:flex;
 }
+
+.buscador-productos{
+    width: 100%;
+    max-width: 300px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    outline: none;
+}
