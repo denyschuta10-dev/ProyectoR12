@@ -3,30 +3,22 @@ const API = "/productos";
 let editandoID = null;
 
 let dineroActual = 0;
-
 document.addEventListener("DOMContentLoaded", () => {
 
     const modalProducto = document.getElementById("modal-producto");
     const modalActividad = document.getElementById("modal-actividad");
 
-    // cerrar con X (seguro)
     document.getElementById("close-modal-producto").onclick = cerrarModalProducto;
     document.getElementById("close-modal-actividad").onclick = cerrarModalActividad;
 
-    // cerrar al hacer click SOLO en el fondo
-    modalProducto.addEventListener("click", (e) => {
-        if (e.target === modalProducto) {
-            cerrarModalProducto();
-        }
+    modalProducto?.addEventListener("click", (e) => {
+        if (e.target === modalProducto) cerrarModalProducto();
     });
 
-    modalActividad.addEventListener("click", (e) => {
-        if (e.target === modalActividad) {
-            cerrarModalActividad();
-        }
+    modalActividad?.addEventListener("click", (e) => {
+        if (e.target === modalActividad) cerrarModalActividad();
     });
 
-    // ESC opcional (mejora UX)
     document.addEventListener("keydown", (e) => {
         if (e.key === "Escape") {
             cerrarModalProducto();
@@ -34,61 +26,43 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    const buscador = document.createElement("input");
-    buscador.classList.add("buscador-productos");
-    buscador.placeholder = "🔍 Buscar producto por nombre o código...";
-
-    const contSec = document.querySelector(".acciones-secundarias");
-    if (contSec) {
-        contSec.prepend(buscador);
-    }
-
-    buscador.addEventListener("input", () => {
-        const valor = buscador.value.toLowerCase();
-        document.querySelectorAll(".tarjeta").forEach(card => {
-             const texto = card.innerText.toLowerCase();
-             card.style.display = texto.includes(valor) ? "block" : "none";
-            });
-        });
-
-
     verificarSesion();
 
-    // Asignar event listeners a todos los botones
+    // LOGIN
+    document.getElementById("btn-login")?.addEventListener("click", login);
 
-    // Asignar event listeners a todos los botones
-    document.getElementById("btn-login").addEventListener("click", login);
-    document.getElementById("btn-agregar").addEventListener("click", agregar);
-    
-    // Solo estos dos para el modal de acciones
+    // INVENTARIO
+    document.getElementById("btn-agregar")?.addEventListener("click", agregar);
+
     document.getElementById("btn-vender").onclick = () => abrirModalAccion("vender");
     document.getElementById("btn-eliminar").onclick = () => abrirModalAccion("eliminar");
-    
-    // BOTÓN DE SALIR (Asegúrate de que esta línea esté tal cual)
-    document.getElementById("btn-salir").addEventListener("click", salir);
-    
-    document.getElementById("btn-crear-vendedor")
-.addEventListener("click", crearVendedor);
 
-document.getElementById("btn-ver-usuarios")
-.addEventListener("click", verUsuarios);
+    // SALIR
+    document.getElementById("btn-salir")?.addEventListener("click", salir);
 
-document.getElementById("close-modal-usuarios")
-.addEventListener("click", cerrarModalUsuarios);
+    document.getElementById("btn-cancelar-salir")?.addEventListener("click", () => {
+        document.getElementById("modal-salir").classList.remove("activo");
+    });
 
-document.getElementById("btn-crear-vendedor")
-.addEventListener("click", () => {
-    document.getElementById("modal-crear-vendedor")
-    .classList.add("activo");
-});
+    document.getElementById("btn-confirmar-salir")?.addEventListener("click", () => {
+        sessionStorage.clear();
+        location.reload();
+    });
 
-document.getElementById("close-modal-crear-vendedor")
-.addEventListener("click", () => {
-    document.getElementById("modal-crear-vendedor")
-    .classList.remove("activo");
-});
-// ... rest of DOMContentLoaded
+    // 🔥 USUARIOS
+    document.getElementById("btn-crear-vendedor")?.addEventListener("click", () => {
+        document.getElementById("modal-crear-vendedor").classList.add("activo");
+    });
 
+    document.getElementById("btn-ver-usuarios")?.addEventListener("click", verUsuarios);
+
+    document.getElementById("close-modal-usuarios")?.addEventListener("click", cerrarModalUsuarios);
+
+    document.getElementById("close-modal-crear-vendedor")?.addEventListener("click", () => {
+        document.getElementById("modal-crear-vendedor").classList.remove("activo");
+    });
+
+    document.getElementById("btn-guardar-vendedor")?.addEventListener("click", guardarVendedor);
 });
 
 
@@ -708,7 +682,6 @@ function verUsuarios() {
 
         data.forEach(u => {
 
-            // 🔒 PROTECCIÓN DEL ADMIN
             let accion = "";
 
             if (u.rol === "admin") {
@@ -727,9 +700,7 @@ function verUsuarios() {
                     <td>${u.nombre}</td>
                     <td>${u.usuario}</td>
                     <td>${u.rol}</td>
-                    <td>
-                        ${accion}
-                    </td>
+                    <td>${accion}</td>
                 </tr>
             `;
         });
