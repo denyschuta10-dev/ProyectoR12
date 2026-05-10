@@ -64,7 +64,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.getElementById("btn-guardar-vendedor")?.addEventListener("click", guardarVendedor);
 
-    crearBuscador();
+      crearBuscador();  
+
 });
 
 
@@ -132,6 +133,7 @@ function login() {
     });
 
 }
+
 
 
 // ================= SESION =================
@@ -734,11 +736,17 @@ function cerrarModalUsuarios() {
 }
 
 function crearBuscador() {
+    const contSec = document.querySelector(".acciones-secundarias");
+
+    if (!contSec) {
+        console.log("❌ No existe .acciones-secundarias");
+        return;
+    }
+
     const buscador = document.createElement("input");
     buscador.placeholder = "Buscar producto...";
     buscador.classList.add("buscador-productos");
 
-    const contSec = document.querySelector(".acciones-secundarias");
     contSec.prepend(buscador);
 
     buscador.addEventListener("input", () => {
