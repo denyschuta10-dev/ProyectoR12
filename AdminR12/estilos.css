@@ -664,8 +664,8 @@ h1 {
 
 #btn-crear-vendedor,
 #btn-ver-usuarios {
-    background: #1d1d1f;
-    color: white;
+    background: #ffffff;
+    color: rgb(16, 16, 16);
     border: none;
     padding: 12px 18px;
     border-radius: 12px;
@@ -679,7 +679,7 @@ h1 {
 
 #btn-crear-vendedor:hover,
 #btn-ver-usuarios:hover {
-    background: #333;
+    background: #d0cdcd;
     transform: scale(1.03);
 }
 
@@ -766,4 +766,21 @@ h1 {
         transform: scale(1);
         opacity: 1;
     }
+}
+
+#modal-crear-vendedor {
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background: rgba(0,0,0,0.6);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:999;
+}
+
+#modal-crear-vendedor.activo {
+    display:flex;
 }

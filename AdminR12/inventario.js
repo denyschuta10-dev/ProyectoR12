@@ -76,6 +76,17 @@ document.getElementById("btn-ver-usuarios")
 document.getElementById("close-modal-usuarios")
 .addEventListener("click", cerrarModalUsuarios);
 
+document.getElementById("btn-crear-vendedor")
+.addEventListener("click", () => {
+    document.getElementById("modal-crear-vendedor")
+    .classList.add("activo");
+});
+
+document.getElementById("close-modal-crear-vendedor")
+.addEventListener("click", () => {
+    document.getElementById("modal-crear-vendedor")
+    .classList.remove("activo");
+});
 // ... rest of DOMContentLoaded
 
 });
@@ -647,25 +658,21 @@ document.getElementById("close-modal-agregar").onclick = () => {
 };
 
 
-function crearVendedor() {
+document.getElementById("btn-guardar-vendedor")
+.addEventListener("click", () => {
 
-    const nombre = prompt("Nombre del vendedor:");
-    if (!nombre) return;
+    const nombre = document.getElementById("v-nombre").value;
+    const usuario = document.getElementById("v-usuario").value;
+    const clave = document.getElementById("v-clave").value;
 
-    const usuario = prompt("Usuario:");
-    if (!usuario) return;
-
-    const clave = prompt("Contraseña:");
-    if (!clave) return;
+    if (!nombre || !usuario || !clave) {
+        alert("⚠️ Completa todos los campos");
+        return;
+    }
 
     fetch("/usuarios", {
-
         method: "POST",
-
-        headers: {
-            "Content-Type": "application/json"
-        },
-
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
             nombre,
             usuario,
@@ -682,8 +689,13 @@ function crearVendedor() {
         }
 
         alert("✅ Vendedor creado");
+
+        document.getElementById("modal-crear-vendedor")
+        .classList.remove("activo");
+
+        verUsuarios();
     });
-}
+});
 
 function verUsuarios() {
 
@@ -691,12 +703,23 @@ function verUsuarios() {
     .then(r => r.json())
     .then(data => {
 
-        const tabla =
-        document.getElementById("tabla-usuarios");
-
+        const tabla = document.getElementById("tabla-usuarios");
         tabla.innerHTML = "";
 
         data.forEach(u => {
+
+            // 🔒 PROTECCIÓN DEL ADMIN
+            let accion = "";
+
+            if (u.rol === "admin") {
+                accion = `<span style="color:gray;">Protegido</span>`;
+            } else {
+                accion = `
+                    <button onclick="eliminarUsuario(${u.id})">
+                        Eliminar
+                    </button>
+                `;
+            }
 
             tabla.innerHTML += `
                 <tr>
@@ -705,9 +728,7 @@ function verUsuarios() {
                     <td>${u.usuario}</td>
                     <td>${u.rol}</td>
                     <td>
-                        <button onclick="eliminarUsuario(${u.id})">
-                            Eliminar
-                        </button>
+                        ${accion}
                     </td>
                 </tr>
             `;
@@ -720,8 +741,7 @@ function verUsuarios() {
 
 function eliminarUsuario(id) {
 
-    const confirmar =
-    confirm("¿Eliminar vendedor?");
+    const confirmar = confirm("⚠️ ¿Seguro que deseas eliminar este vendedor?");
 
     if (!confirmar) return;
 
@@ -729,6 +749,7 @@ function eliminarUsuario(id) {
         method: "DELETE"
     })
     .then(() => {
+        alert("🗑️ Vendedor eliminado");
         verUsuarios();
     });
 }
