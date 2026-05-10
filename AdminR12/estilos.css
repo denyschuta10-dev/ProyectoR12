@@ -955,7 +955,7 @@ h1 {
 
 #btn-crear-vendedor:hover,
 #btn-ver-usuarios:hover{
-    background: #00A862;
+    background: #000000;
     color: white;
 
     transform: translateY(-3px) scale(1.03);
