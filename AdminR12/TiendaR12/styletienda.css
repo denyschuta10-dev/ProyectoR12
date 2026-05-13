@@ -1194,19 +1194,19 @@ body{
 
 
 .benefits-r12{
+
     width:100%;
 
     display:grid;
 
     grid-template-columns:
-    repeat(auto-fit,minmax(200px,1fr));
+    repeat(auto-fit,minmax(240px,1fr));
 
-    gap:20px;
+    gap:25px;
 
-    padding:40px 8%;
+    padding:60px 8%;
 
-    background:#111;
-    color:white;
+    background:#f8f8f8;
 }
 
 .benefit-box{
