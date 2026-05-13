@@ -258,9 +258,11 @@ function renderizarProductos(lista) {
         const card = document.createElement('div');
         card.className = `product-card-apple ${!tieneStock ? 'out-of-stock' : ''}`;
         
-        card.onclick = () => {
-            if(tieneStock) openModal(p.nombre, p.precio, p.descripcion, p.imagen_url, p.cantidad);
-        };
+       card.onclick = () => {
+
+    window.location.href = `/producto.html?id=${p.id}`;
+
+};
 
         card.innerHTML = `
             <div class="img-placeholder">

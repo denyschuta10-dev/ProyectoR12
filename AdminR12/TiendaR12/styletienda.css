@@ -1420,21 +1420,21 @@ body{
     z-index: 99999;
 }
 
-.custom-alert-box{
-    width: 90%;
-    max-width: 420px;
+.custom-alert-box button{
+    border: none;
 
-    background: white;
+    background: #ff3b30;
+    color: white;
 
-    border-radius: 28px;
+    padding: 14px 28px;
 
-    padding: 35px;
+    border-radius: 14px;
 
-    text-align: center;
+    cursor: pointer;
 
-    animation: alertaShow .25s ease;
+    font-weight: 600;
 
-    box-shadow: 0 20px 50px rgba(0,0,0,0.18);
+    transition: .3s;
 }
 
 .custom-alert-box h3{
@@ -1451,7 +1451,7 @@ body{
 .custom-alert-box button{
     border: none;
 
-    background: #111;
+    background: #5d0505;
     color: white;
 
     padding: 14px 28px;
@@ -1480,4 +1480,123 @@ body{
         transform: scale(1);
         opacity: 1;
     }
+}
+
+.modal-img-container{
+    overflow: hidden;
+    cursor: zoom-in;
+}
+
+.modal-img-container img{
+    transition: transform .3s ease;
+}
+
+.modal-img-container:hover img{
+    transform: scale(1.25);
+}
+
+
+/* =========================================
+   PÁGINA PRODUCTO
+========================================= */
+
+.producto-page{
+
+    width:100%;
+
+    padding:100px 5%;
+}
+
+.producto-container{
+
+    max-width:1400px;
+
+    margin:auto;
+
+    display:flex;
+
+    gap:80px;
+
+    align-items:center;
+
+    flex-wrap:wrap;
+}
+
+.producto-imagen{
+
+    flex:1;
+
+    min-width:320px;
+
+    background:white;
+
+    border-radius:35px;
+
+    padding:40px;
+
+    overflow:hidden;
+
+    box-shadow:0 10px 40px rgba(0,0,0,.08);
+}
+
+.producto-imagen img{
+
+    width:100%;
+
+    transition:.3s;
+
+    cursor:zoom-in;
+}
+
+.producto-imagen:hover img{
+
+    transform:scale(1.15);
+}
+
+.producto-info{
+
+    flex:1;
+
+    min-width:320px;
+}
+
+.producto-info h1{
+
+    font-size:3rem;
+
+    margin-bottom:20px;
+}
+
+.producto-precio{
+
+    font-size:2.5rem;
+
+    font-weight:800;
+
+    margin-bottom:20px;
+
+    color:#111;
+}
+
+.producto-descripcion{
+
+    color:#666;
+
+    line-height:1.8;
+
+    margin-bottom:25px;
+}
+
+.producto-stock{
+
+    margin-bottom:30px;
+
+    font-weight:700;
+}
+
+.producto-info button{
+
+    width:100%;
+
+    margin-bottom:15px;
 }

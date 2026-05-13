@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Producto | R12 Sports</title>
+
+    <link rel="stylesheet" href="styletienda.css">
+
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar-tienda">
+
+        <div class="logo-container">
+
+            <img
+                src="/Imagenes/LogoT.jpg"
+                class="main-logo"
+            >
+
+            <span class="brand-name">
+                R12 SPORTS
+            </span>
+
+        </div>
+
+    </nav>
+
+
+
+
+
+    <!-- PRODUCTO -->
+
+    <section class="producto-page">
+
+        <div class="producto-container">
+
+            <!-- IMAGEN -->
+
+            <div class="producto-imagen">
+
+                <img
+                    id="producto-img"
+                    src=""
+                >
+
+            </div>
+
+
+
+
+
+            <!-- INFO -->
+
+            <div class="producto-info">
+
+                <h1 id="producto-nombre"></h1>
+
+                <p
+                    class="producto-precio"
+                    id="producto-precio"
+                ></p>
+
+                <p
+                    class="producto-descripcion"
+                    id="producto-descripcion"
+                ></p>
+
+                <p
+                    class="producto-stock"
+                    id="producto-stock"
+                ></p>
+
+
+
+
+
+                <button
+                    class="btn-apple"
+                    onclick="agregarProducto()"
+                >
+
+                    Agregar al carrito
+
+                </button>
+
+
+
+
+
+                <button
+                    class="btn-whatsapp-buy"
+                    onclick="comprarWhatsApp()"
+                >
+
+                    Comprar por WhatsApp
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+
+
+    <script>
+
+        let productoActual = null;
+
+
+
+
+
+        // OBTENER ID
+
+        const params = new URLSearchParams(window.location.search);
+
+        const id = params.get("id");
+
+
+
+
+
+        // CARGAR PRODUCTO
+
+        fetch('/productos')
+
+        .then(res => res.json())
+
+        .then(productos => {
+
+            productoActual = productos.find(p => p.id == id);
+
+            if(!productoActual){
+
+                document.body.innerHTML = "<h1>Producto no encontrado</h1>";
+
+                return;
+            }
+
+            document.getElementById("producto-img").src =
+            productoActual.imagen_url;
+
+            document.getElementById("producto-nombre").innerText =
+            productoActual.nombre;
+
+            document.getElementById("producto-precio").innerText =
+            "Q " + parseFloat(productoActual.precio).toFixed(2);
+
+            document.getElementById("producto-descripcion").innerText =
+            productoActual.descripcion;
+
+            document.getElementById("producto-stock").innerText =
+            "Disponibles: " + productoActual.cantidad;
+
+        });
+
+
+
+
+
+        // WHATSAPP
+
+        function comprarWhatsApp(){
+
+            let mensaje =
+            `Hola R12 Sports, quiero comprar: ${productoActual.nombre}`;
+
+            window.open(
+
+                `https://wa.me/50233816134?text=${encodeURIComponent(mensaje)}`,
+
+                '_blank'
+            );
+        }
+
+        // CARRITO SIMPLE
+
+        function agregarProducto(){
+
+            alert("Producto agregado al carrito");
+
+        }
+
+    </script>
+
+</body>
+</html>
