@@ -260,7 +260,8 @@ function renderizarProductos(lista) {
         
        card.onclick = () => {
 
-    window.location.href = `/producto.html?id=${p.id}`;
+    window.location.href =
+`/TiendaR12/producto.html?id=${p.id}`;
 
 };
 

@@ -22,11 +22,16 @@ app.use('/Imagenes', express.static(path.resolve(__dirname, 'Imagenes')));
 
 console.log("Ruta imágenes:", path.resolve(__dirname, 'Imagenes'));
 
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 // D. RUTA PRINCIPAL
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
+app.get('/producto.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'TiendaR12', 'producto.html'));
+});
 
 
 
