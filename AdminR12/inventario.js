@@ -261,10 +261,17 @@ function verInventario() {
 if (rol !== "vendedor") {
     div.appendChild(btnEditar);
 }
-            div.onclick = () => {
-    window.location.href =
-    `/TiendaR12/producto.html?id=${p.id}`;
+            const rol = sessionStorage.getItem("rol");
+
+if (rol !== "vendedor") {
+    div.appendChild(btnEditar);
+}
+
+div.onclick = () => {
+    abrirModalProducto(p);
 };
+
+cont.appendChild(div);
             cont.appendChild(div);
         });
     });
