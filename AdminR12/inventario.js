@@ -224,57 +224,80 @@ document.getElementById("btn-confirmar-salir").onclick = () => {
 
 
 // ================= INVENTARIO (ACTUALIZADO) =================
+// ================= INVENTARIO =================
 function verInventario() {
+
     fetch(API)
     .then(r => r.json())
     .then(data => {
+
         const cont = document.getElementById("inventario");
         cont.innerHTML = "";
 
         data.forEach(p => {
+
             const div = document.createElement("div");
             div.className = "tarjeta";
-            
-            const imagen = p.imagen_url 
-                ? `<img src="${p.imagen_url}" class="img-producto-tarjeta" onerror="this.src='https://cdn-icons-png.flaticon.com/512/924/924514.png'">` 
-                : `<i class="fas fa-coffee fa-3x" style="margin-bottom:10px; color:#006241;"></i>`;
-            
-            // Creamos el botón por separado para manejar el evento de forma más limpia
+
+            const imagen = p.imagen_url
+                ? `<img src="${p.imagen_url}" class="img-producto-tarjeta"
+                   onerror="this.src='https://cdn-icons-png.flaticon.com/512/924/924514.png'">`
+                : `<i class="fas fa-coffee fa-3x"
+                   style="margin-bottom:10px; color:#006241;"></i>`;
+
             div.innerHTML = `
-                ${imagen} 
+                ${imagen}
                 <h3>${p.nombre}</h3>
-                <p><strong>Código:</strong> ${p.codigo}</p>
-                <p><strong>Stock:</strong> ${p.cantidad}</p>
-                <p><strong>Precio:</strong> Q${p.precio}</p>
+
+                <p>
+                    <strong>Código:</strong>
+                    ${p.codigo}
+                </p>
+
+                <p>
+                    <strong>Stock:</strong>
+                    ${p.cantidad}
+                </p>
+
+                <p>
+                    <strong>Precio:</strong>
+                    Q${p.precio}
+                </p>
             `;
 
+            // BOTÓN EDITAR
             const btnEditar = document.createElement("button");
+
             btnEditar.className = "btn-editar-mini";
-            btnEditar.innerHTML = `<i class="fas fa-edit"></i> Editar`;
+
+            btnEditar.innerHTML =
+                `<i class="fas fa-edit"></i> Editar`;
+
             btnEditar.onclick = (e) => {
-                e.stopPropagation(); // Evita abrir el modal de detalles
-                prepararEdicion(p);  // Pasamos el objeto directamente sin stringify
+
+                e.stopPropagation();
+
+                prepararEdicion(p);
             };
 
+            // SOLO ADMIN VE EDITAR
             const rol = sessionStorage.getItem("rol");
 
-if (rol !== "vendedor") {
-    div.appendChild(btnEditar);
-}
-            const rol = sessionStorage.getItem("rol");
+            if (rol !== "vendedor") {
+                div.appendChild(btnEditar);
+            }
 
-if (rol !== "vendedor") {
-    div.appendChild(btnEditar);
-}
+            // ABRIR MODAL DEL PRODUCTO
+            div.onclick = () => {
+                abrirModalProducto(p);
+            };
 
-div.onclick = () => {
-    abrirModalProducto(p);
-};
-
-cont.appendChild(div);
             cont.appendChild(div);
+
         });
+
     });
+
 }
 
 function prepararEdicion(p) {
