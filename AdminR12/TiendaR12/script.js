@@ -30,7 +30,7 @@ function toggleCarrito() {
 
 // FINALIZAR COMPRA
 function comprarCarritoWhatsApp() {
-    if (carrito.length === 0) return alert("Tu carrito está vacío");
+    if (carrito.length === 0) return mostrarAlerta("Tu carrito está vacío");
 
     let mensaje = "¡Hola R12 Sports! 🦁 Quiero realizar el siguiente pedido:\n\n";
     let total = 0;
@@ -62,7 +62,7 @@ function pedirPersonalizado() {
     const talla = document.getElementById('custom-size').value;
 
     if (!nombre || !numero) {
-        alert("Por favor rellena el nombre y número");
+        mostrarAlerta("Por favor rellena el nombre y número");
         return;
     }
 
@@ -363,7 +363,23 @@ function cambiarCantidad(index, valor) {
     } else if (nuevaCant <= 0) {
         carrito.splice(index, 1);
     } else {
-        alert("Máximo stock disponible alcanzado");
+        mostrarAlerta("Máximo stock disponible alcanzado");
     }
     actualizarCarritoUI();
+}
+
+function mostrarAlerta(msg) {
+
+    document.getElementById("alertMessage").innerText = msg;
+
+    document.getElementById("customAlert").style.display = "flex";
+
+    document.body.style.overflow = "hidden";
+}
+
+function cerrarAlerta() {
+
+    document.getElementById("customAlert").style.display = "none";
+
+    document.body.style.overflow = "auto";
 }

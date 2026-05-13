@@ -1398,3 +1398,86 @@ body{
 
     font-size:.9rem;
 }
+
+
+/* =========================================
+   ALERTA PERSONALIZADA
+========================================= */
+
+.custom-alert{
+    position: fixed;
+    inset: 0;
+
+    background: rgba(0,0,0,0.45);
+
+    backdrop-filter: blur(8px);
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    z-index: 99999;
+}
+
+.custom-alert-box{
+    width: 90%;
+    max-width: 420px;
+
+    background: white;
+
+    border-radius: 28px;
+
+    padding: 35px;
+
+    text-align: center;
+
+    animation: alertaShow .25s ease;
+
+    box-shadow: 0 20px 50px rgba(0,0,0,0.18);
+}
+
+.custom-alert-box h3{
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+}
+
+.custom-alert-box p{
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+.custom-alert-box button{
+    border: none;
+
+    background: #111;
+    color: white;
+
+    padding: 14px 28px;
+
+    border-radius: 14px;
+
+    cursor: pointer;
+
+    font-weight: 600;
+
+    transition: .3s;
+}
+
+.custom-alert-box button:hover{
+    transform: translateY(-2px);
+    opacity: .9;
+}
+
+@keyframes alertaShow{
+    from{
+        transform: scale(.85);
+        opacity: 0;
+    }
+
+    to{
+        transform: scale(1);
+        opacity: 1;
+    }
+}
