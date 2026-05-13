@@ -762,20 +762,24 @@ function verUsuarios() {
         .classList.add("activo");
     });
 }
-
 function eliminarUsuario(id) {
 
-    const confirmar = confirm("⚠️ ¿Seguro que deseas eliminar este vendedor?");
+    mostrarConfirmacion(
+        "⚠️ ¿Seguro que deseas eliminar este vendedor?",
+        function () {
 
-    if (!confirmar) return;
+            fetch("/usuarios/" + id, {
+                method: "DELETE"
+            })
+            .then(() => {
 
-    fetch("/usuarios/" + id, {
-        method: "DELETE"
-    })
-    .then(() => {
-        alert("🗑️ Vendedor eliminado");
-        verUsuarios();
-    });
+                mostrarAlerta("🗑️ Vendedor eliminado");
+
+                verUsuarios();
+            });
+
+        }
+    );
 }
 
 function cerrarModalUsuarios() {
@@ -808,3 +812,21 @@ function crearBuscador() {
     });
 }
 
+function mostrarConfirmacion(mensaje, callback) {
+
+    document.getElementById("confirmMessage").innerText = mensaje;
+
+    document.getElementById("confirmModal").style.display = "flex";
+
+    document.getElementById("btnConfirmarEliminar").onclick = function () {
+
+        callback();
+
+        cerrarConfirm();
+    };
+}
+
+function cerrarConfirm() {
+
+    document.getElementById("confirmModal").style.display = "none";
+}

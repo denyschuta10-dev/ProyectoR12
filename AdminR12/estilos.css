@@ -1005,3 +1005,22 @@ h1 {
     box-shadow:
         0 0 0 5px rgba(0,168,98,0.15);
 }
+
+.confirm-buttons{
+
+    display:flex;
+
+    gap:15px;
+
+    justify-content:center;
+}
+
+.btn-cancelar{
+
+    background:#999 !important;
+}
+
+.btn-eliminar{
+
+    background:#c1121f !important;
+}
