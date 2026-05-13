@@ -1,9 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
 
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Producto | R12 Sports</title>
 
@@ -49,6 +54,8 @@
                 <img
                     id="producto-img"
                     src=""
+                    alt="Producto"
+                    onclick="abrirZoom()"
                 >
 
             </div>
@@ -114,6 +121,33 @@
 
 
 
+    <!-- MODAL ZOOM -->
+
+    <div
+        class="zoom-modal"
+        id="zoomModal"
+    >
+
+        <span
+            class="cerrar-zoom"
+            onclick="cerrarZoom()"
+        >
+
+            &times;
+
+        </span>
+
+        <img
+            id="zoomImg"
+            src=""
+        >
+
+    </div>
+
+
+
+
+
     <script>
 
         let productoActual = null;
@@ -124,9 +158,11 @@
 
         // OBTENER ID
 
-        const params = new URLSearchParams(window.location.search);
+        const params =
+        new URLSearchParams(window.location.search);
 
-        const id = params.get("id");
+        const id =
+        params.get("id");
 
 
 
@@ -140,11 +176,13 @@
 
         .then(productos => {
 
-            productoActual = productos.find(p => p.id == id);
+            productoActual =
+            productos.find(p => p.id == id);
 
             if(!productoActual){
 
-                document.body.innerHTML = "<h1>Producto no encontrado</h1>";
+                document.body.innerHTML =
+                "<h1 style='text-align:center; margin-top:100px;'>Producto no encontrado</h1>";
 
                 return;
             }
@@ -174,6 +212,8 @@
 
         function comprarWhatsApp(){
 
+            if(!productoActual) return;
+
             let mensaje =
             `Hola R12 Sports, quiero comprar: ${productoActual.nombre}`;
 
@@ -185,6 +225,10 @@
             );
         }
 
+
+
+
+
         // CARRITO SIMPLE
 
         function agregarProducto(){
@@ -193,7 +237,81 @@
 
         }
 
+
+
+
+
+        // ABRIR ZOOM
+
+        function abrirZoom(){
+
+            const modal =
+            document.getElementById("zoomModal");
+
+            const zoomImg =
+            document.getElementById("zoomImg");
+
+            const productoImg =
+            document.getElementById("producto-img");
+
+            zoomImg.src =
+            productoImg.src;
+
+            modal.style.display =
+            "flex";
+
+            document.body.style.overflow =
+            "hidden";
+        }
+
+
+
+
+
+        // CERRAR ZOOM
+
+        function cerrarZoom(){
+
+            document.getElementById("zoomModal").style.display =
+            "none";
+
+            document.body.style.overflow =
+            "auto";
+        }
+
+
+
+
+
+        // CLICK AFUERA
+
+        window.addEventListener("click", function(e){
+
+            const modal =
+            document.getElementById("zoomModal");
+
+            if(e.target === modal){
+
+                cerrarZoom();
+            }
+        });
+
+
+
+
+
+        // ESC PARA CERRAR
+
+        document.addEventListener("keydown", function(e){
+
+            if(e.key === "Escape"){
+
+                cerrarZoom();
+            }
+        });
+
     </script>
 
 </body>
+
 </html>
