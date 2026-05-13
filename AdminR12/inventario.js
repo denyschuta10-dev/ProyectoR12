@@ -762,6 +762,7 @@ function verUsuarios() {
         .classList.add("activo");
     });
 }
+
 function eliminarUsuario(id) {
 
     mostrarConfirmacion(
@@ -771,11 +772,20 @@ function eliminarUsuario(id) {
             fetch("/usuarios/" + id, {
                 method: "DELETE"
             })
-            .then(() => {
+            .then(response => response.json())
+            .then(data => {
+
+                cerrarConfirm();
 
                 mostrarAlerta("🗑️ Vendedor eliminado");
 
                 verUsuarios();
+            })
+            .catch(error => {
+
+                console.log(error);
+
+                mostrarAlerta("Error al eliminar vendedor");
             });
 
         }
