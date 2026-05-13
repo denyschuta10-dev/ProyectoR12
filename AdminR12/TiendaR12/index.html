@@ -642,7 +642,72 @@
 
     </div>
 
+<!-- ===================================== -->
+<!-- CARRITO LATERAL -->
+<!-- ===================================== -->
 
+<div id="side-cart" class="side-cart">
+
+    <div class="cart-header">
+
+        <h2>
+            Tu Carrito
+        </h2>
+
+        <span
+            class="close-cart"
+            onclick="toggleCarrito()"
+        >
+            &times;
+        </span>
+
+    </div>
+
+
+
+
+
+    <div
+        class="cart-items"
+        id="cart-items"
+    >
+
+        <p style="text-align:center; color:#888;">
+            Tu carrito está vacío
+        </p>
+
+    </div>
+
+
+
+
+
+    <div class="cart-footer">
+
+        <div class="total-row">
+
+            <span>Total:</span>
+
+            <span id="cart-total">
+                Q 0.00
+            </span>
+
+        </div>
+
+
+
+
+
+        <button
+            class="btn-whatsapp-buy"
+            onclick="comprarCarritoWhatsApp()"
+        >
+            Finalizar Pedido
+        </button>
+
+    </div>
+
+</div>
 
 
 

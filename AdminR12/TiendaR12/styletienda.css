@@ -1216,24 +1216,30 @@ body{
     align-items:center;
     justify-content:center;
 
-    gap:15px;
+    gap:18px;
 
     text-align:center;
 
-    padding:30px;
+    padding:35px 25px;
 
-    border-radius:25px;
+    border-radius:30px;
 
-    background:rgba(255,255,255,.05);
+    background:white;
+
+    border:1px solid rgba(0,0,0,.06);
+
+    box-shadow:
+    0 10px 30px rgba(0,0,0,.05);
 
     transition:0.3s;
 }
 
 .benefit-box:hover{
 
-    transform:translateY(-5px);
+    transform:translateY(-8px);
 
-    background:rgba(255,255,255,.08);
+    box-shadow:
+    0 20px 40px rgba(0,0,0,.10);
 }
 
 .benefit-box svg{
@@ -1241,13 +1247,15 @@ body{
     width:42px;
     height:42px;
 
-    stroke:var(--r12-gold);
+    stroke:#111;
 }
 
 .benefit-box span{
 
     font-size:1rem;
-    font-weight:600;
+    font-weight:700;
+
+    color:#111;
 }
 
 /* =========================================
