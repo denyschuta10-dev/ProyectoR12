@@ -128,7 +128,7 @@ function login() {
 
         console.log(err);
 
-        alert("Error conectando con el servidor");
+        mostrarAlerta("Error conectando con el servidor");
 
     });
 
@@ -202,25 +202,7 @@ function salir() {
     document.getElementById("modal-salir").classList.add("activo");
 }
 
-// 2. Si el usuario hace clic en "Cancelar" (Cierra el modal)
-document.getElementById("btn-cancelar-salir").onclick = () => {
-    document.getElementById("modal-salir").classList.remove("activo");
-};
 
-// 3. Si el usuario confirma "Salir" (Cierra sesión de verdad)
-document.getElementById("btn-confirmar-salir").onclick = () => {
-    sessionStorage.removeItem("sesion");
-    sessionStorage.removeItem("usuario");
-
-    // Ocultar todo y mostrar login
-    document.getElementById("modal-salir").classList.remove("activo");
-    document.getElementById("login-section").style.display = "flex";
-    document.querySelector("main").style.display = "none";
-    document.querySelector("aside").style.display = "none";
-    
-    // Opcional: recargar la página para limpiar todo rastro
-    location.reload(); 
-};
 
 
 // ================= INVENTARIO (ACTUALIZADO) =================
@@ -333,9 +315,6 @@ function agregar() {
 }
 
 // Cerrar el modal de agregar
-document.getElementById("close-modal-agregar").onclick = () => {
-    document.getElementById("modal-agregar").classList.remove("activo");
-};
 
 // Al hacer clic en "Elegir Foto" dentro del modal
 document.getElementById("btn-seleccionar-foto").onclick = () => {
@@ -360,25 +339,12 @@ document.getElementById("input-galeria-oculto").onchange = async (e) => {
         urlImagenSubida = dataSubida.url;
         document.getElementById("nombre-archivo-status").textContent = "✅ Foto lista: " + archivo.name;
     } catch (error) {
-        alert("❌ Error al subir la imagen");
+        mostrarAlerta("❌ Error al subir la imagen");
         document.getElementById("nombre-archivo-status").textContent = "Error al cargar";
     }
 };
 
 
-// ================= BUSCAR =================
-function buscar() {
-    const codigo = prompt("Código:");
-
-    fetch(API)
-    .then(r => r.json())
-    .then(data => {
-        const p = data.find(x => x.codigo == codigo);
-        if (!p) return alert("No encontrado");
-
-        alert(`${p.nombre}\nCódigo: ${p.codigo}\nCantidad: ${p.cantidad}\nPrecio: Q${p.precio}`);
-    });
-}
 
 
 
@@ -496,7 +462,7 @@ function agregarSeguro(codigo, nombre, cantidad, precio, imagen_url, descripcion
         headers: {"Content-Type":"application/json"},
         body: JSON.stringify({codigo, nombre, cantidad, precio, imagen_url, descripcion}) 
     }).then(() => {
-        alert("✅ PRODUCTO AGREGADO CON ÉXITO");
+        mostrarAlerta("✅ PRODUCTO AGREGADO CON ÉXITO");
         agregarRegistro("Producto agregado: " + nombre);
         verInventario();
     });
@@ -537,33 +503,46 @@ document.getElementById("close-modal-acciones").onclick = () => {
 // 3. Lógica del botón CONFIRMAR del modal
 document.getElementById("btn-confirmar-accion").onclick = async () => {
     const codigo = document.getElementById("accion-codigo").value;
-    if (!codigo) return alert("⚠️ Ingresa el código");
+    if (!codigo) return mostrarAlerta("⚠️ Ingresa el código");
 
     const r = await fetch(API);
     const data = await r.json();
     const p = data.find(x => String(x.codigo) === String(codigo));
 
-    if (!p) return alert("❌ Producto no encontrado");
+    if (!p) return mostrarAlerta("❌ Producto no encontrado");
 
     if (tipoAccionActual === "vender") {
         const cant = parseInt(document.getElementById("accion-cantidad").value);
-        if (isNaN(cant) || cant <= 0 || cant > p.cantidad) return alert("❌ Cantidad inválida o stock insuficiente");
+        if (isNaN(cant) || cant <= 0 || cant > p.cantidad) return mostrarAlerta("❌ Cantidad inválida o stock insuficiente");
         
         p.cantidad -= cant;
         dineroActual += p.precio * cant;
         actualizarProductoServidor(p, "Venta: " + p.nombre, true);
 
     } else if (tipoAccionActual === "eliminar") {
-        if (confirm(`¿Seguro que deseas eliminar ${p.nombre}?`)) {
-            fetch(API + "/" + p.id, { method: "DELETE" }).then(() => {
-                agregarRegistro("Eliminado: " + p.nombre);
-                verInventario();
-                document.getElementById("modal-acciones").classList.remove("activo");
-            });
-        }
+        mostrarConfirmacion(
+    `¿Seguro que deseas eliminar ${p.nombre}?`,
+    function () {
+
+        fetch(API + "/" + p.id, {
+            method: "DELETE"
+        })
+        .then(() => {
+
+            agregarRegistro("Eliminado: " + p.nombre);
+
+            verInventario();
+
+            document.getElementById("modal-acciones")
+            .classList.remove("activo");
+
+            mostrarAlerta("🗑️ Producto eliminado");
+        });
+    }
+);
     } else if (tipoAccionActual === "editar") {
         const nuevoP = parseFloat(document.getElementById("accion-precio").value);
-        if (isNaN(nuevoP)) return alert("❌ Precio inválido");
+        if (isNaN(nuevoP)) return mostrarAlerta("❌ Precio inválido");
         
         p.precio = nuevoP;
         actualizarProductoServidor(p, "Precio actualizado: " + p.nombre, false);
@@ -581,27 +560,11 @@ function actualizarProductoServidor(producto, textoRegistro, actualizarDineroFla
         agregarRegistro(textoRegistro);
         verInventario();
         document.getElementById("modal-acciones").classList.remove("activo");
-        alert("✅ OPERACIÓN COMPLETADA");
+        mostrarAlerta("✅ OPERACIÓN COMPLETADA");
     });
 }
 
-let editando = false; // Variable para saber si estamos creando o editando
 
-function editarProducto(p) {
-    editando = true;
-    document.getElementById("modal-titulo").innerText = "Editar Producto";
-    
-    // Llenamos los inputs con la info actual
-    document.getElementById("form-codigo").value = p.codigo;
-    document.getElementById("form-codigo").disabled = true; // El código no se debería cambiar
-    document.getElementById("form-nombre").value = p.nombre;
-    document.getElementById("form-cantidad").value = p.cantidad;
-    document.getElementById("form-precio").value = p.precio;
-    document.getElementById("form-descripcion").value = p.descripcion;
-    document.getElementById("form-imagen").value = p.imagen_url;
-
-    document.getElementById("modal-agregar").classList.add("activo");
-}
 
 // Esta función va en Proyecto.js (Admin)
 document.getElementById("btn-guardar-final").onclick = async () => {
@@ -611,7 +574,14 @@ document.getElementById("btn-guardar-final").onclick = async () => {
     const precio = parseFloat(document.getElementById("form-precio").value);
     const descripcion = document.getElementById("form-descripcion").value;
 
-    if (!codigo || !nombre || isNaN(cantidad)) return alert("⚠️ Datos incompletos");
+    if (
+    !codigo ||
+    !nombre ||
+    isNaN(cantidad) ||
+    cantidad < 0 ||
+    isNaN(precio) ||
+    precio < 0
+) return mostrarAlerta("⚠️ Datos incompletos");
 
     // 1. Buscamos si el código ya existe en el inventario actual
     const res = await fetch(API);
@@ -647,7 +617,7 @@ document.getElementById("btn-guardar-final").onclick = async () => {
     .then(res => {
     if (res.ok) {
 
-        alert(mensaje);
+        mostrarAlerta(mensaje);
 
         // 🔥 REGISTRAR ACTIVIDAD
         if (metodo === "POST") {
@@ -688,7 +658,7 @@ document.getElementById("btn-guardar-vendedor")
     const clave = document.getElementById("v-clave").value;
 
     if (!nombre || !usuario || !clave) {
-        alert("⚠️ Completa todos los campos");
+        mostrarAlerta("⚠️ Completa todos los campos");
         return;
     }
 
@@ -706,11 +676,11 @@ document.getElementById("btn-guardar-vendedor")
     .then(data => {
 
     if (data.error) {
-        alert(data.error);
+        mostrarAlerta(data.error);
         return;
     }
 
-    alert(data.mensaje);
+    mostrarAlerta(data.mensaje);
 
     document.getElementById("modal-crear-vendedor")
     .classList.remove("activo");
@@ -741,9 +711,9 @@ function verUsuarios() {
                 accion = `<span style="color:gray;">Protegido</span>`;
             } else {
                 accion = `
-                    <button onclick="eliminarUsuario(${u.id})">
-                        Eliminar
-                    </button>
+                    <button class="btn-eliminar-vendedor" data-id="${u.id}">
+    Eliminar
+</button>
                 `;
             }
 
@@ -760,6 +730,18 @@ function verUsuarios() {
 
         document.getElementById("modal-usuarios")
         .classList.add("activo");
+
+        document.querySelectorAll(".btn-eliminar-vendedor")
+.forEach(btn => {
+
+    btn.addEventListener("click", () => {
+
+        const id = btn.dataset.id;
+
+        eliminarUsuario(id);
+    });
+
+});
     });
 }
 
@@ -779,7 +761,15 @@ function eliminarUsuario(id) {
 
                 mostrarAlerta("🗑️ Vendedor eliminado");
 
-                verUsuarios();
+                // 🔥 ELIMINAR LA FILA SIN RECARGAR
+                const boton = document.querySelector(
+    `.btn-eliminar-vendedor[data-id="${id}"]`
+);
+
+                if (boton) {
+                    boton.closest("tr").remove();
+                }
+
             })
             .catch(error => {
 
@@ -793,7 +783,6 @@ function eliminarUsuario(id) {
 }
 
 function cerrarModalUsuarios() {
-
     document.getElementById("modal-usuarios")
     .classList.remove("activo");
 }
@@ -830,13 +819,39 @@ function mostrarConfirmacion(mensaje, callback) {
 
     document.getElementById("btnConfirmarEliminar").onclick = function () {
 
-        callback();
+    callback();
 
-        cerrarConfirm();
-    };
+    cerrarConfirm();
+};
+
 }
 
 function cerrarConfirm() {
 
     document.getElementById("confirmModal").style.display = "none";
+}
+
+function mostrarAlerta(mensaje) {
+
+    const alerta = document.createElement("div");
+
+    alerta.className = "alerta-custom";
+
+    alerta.innerText = mensaje;
+
+    document.body.appendChild(alerta);
+
+    setTimeout(() => {
+        alerta.classList.add("mostrar");
+    }, 100);
+
+    setTimeout(() => {
+
+        alerta.classList.remove("mostrar");
+
+        setTimeout(() => {
+            alerta.remove();
+        }, 300);
+
+    }, 2500);
 }
