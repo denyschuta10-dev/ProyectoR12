@@ -172,7 +172,7 @@ const params = new URLSearchParams(window.location.search);
 
 const id = params.get("id");
 
-fetch('/productos')
+fetch(window.location.origin + '/productos')
 
 .then(res => res.json())
 
