@@ -1,14 +1,28 @@
-let carrito = [];
+let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+let productoActual = null;
 
 // ABRIR MODAL
-function openModal(title, price, desc, imgSrc) {
-    document.getElementById('modalTitle').innerText = title;
-    document.getElementById('modalPriceLabel').innerText = "Q " + price;
-    document.getElementById('modalDesc').innerText = desc;
-    document.getElementById('modalImg').src = imgSrc;
-    
-    document.getElementById('productModal').style.display = "block";
-    document.body.style.overflow = "hidden";
+function openModal(producto) {
+
+    productoActual = producto;
+
+    document.getElementById('modalTitle').innerText =
+        producto.nombre;
+
+    document.getElementById('modalPriceLabel').innerText =
+        "Q " + producto.precio;
+
+    document.getElementById('modalDesc').innerText =
+        producto.descripcion;
+
+    document.getElementById('modalImg').src =
+        producto.imagen_url;
+
+    document.getElementById('productModal').style.display =
+        "block";
+
+    document.body.style.overflow =
+        "hidden";
 }
 
 // CERRAR MODAL
@@ -24,8 +38,12 @@ function eliminarItem(index) {
     actualizarCarritoUI();
 }
 
-function toggleCarrito() {
-    document.getElementById('side-cart').classList.toggle('open');
+function abrirCarrito() {
+    document.getElementById('side-cart').classList.add('open');
+}
+
+function cerrarCarrito() {
+    document.getElementById('side-cart').classList.remove('open');
 }
 
 // FINALIZAR COMPRA
@@ -46,13 +64,33 @@ function comprarCarritoWhatsApp() {
     
     const url = `https://wa.me/50233816134?text=${encodeURIComponent(mensaje)}`;
     window.open(url, '_blank');
+
+setTimeout(() => {
+
+    carrito = [];
+
+    actualizarCarritoUI();
+
+    localStorage.removeItem("carrito");
+
+    cerrarCarrito();
+
+    mostrarAlerta("Pedido enviado correctamente");
+
+}, 500);
 }
 
 // COMPRA RÁPIDA (Desde el modal directo)
 function sendWhatsAppDirecto() {
     const title = document.getElementById('modalTitle').innerText;
     const price = document.getElementById('modalPriceLabel').innerText;
-    const mensaje = `¡Hola R12 Sports! Me interesa comprar ahora mismo: ${title} (${price})`;
+    const mensaje =
+`¡Hola R12 Sports! 🦁
+
+Quiero comprar este producto:
+
+📦 ${title}
+💰 ${price}`;
     window.open(`https://wa.me/50233816134?text=${encodeURIComponent(mensaje)}`, '_blank');
 }
 
@@ -225,7 +263,11 @@ function prevClientImage() {
 // ========================================
 
 document.addEventListener('DOMContentLoaded', () => {
+
     cargarProductosDesdeBD();
+
+    actualizarCarritoUI();
+
 });
 
 
@@ -250,33 +292,86 @@ function cargarProductosDesdeBD() {
 
 // 2. DIBUJAR LAS TARJETAS (Con validación de Stock)
 function renderizarProductos(lista) {
-    const grid = document.getElementById('product-grid-db');
+
+    const grid =
+    document.getElementById('product-grid-db');
+
     grid.innerHTML = "";
 
     lista.forEach(p => {
-        const tieneStock = p.cantidad > 0;
-        const card = document.createElement('div');
-        card.className = `product-card-apple ${!tieneStock ? 'out-of-stock' : ''}`;
-        
-       card.onclick = () => {
 
-    window.location.href =
-`/TiendaR12/producto.html?id=${p.id}`;
+        const tieneStock =
+        p.cantidad > 0;
 
-};
+        const card =
+        document.createElement('div');
+
+        card.className =
+        `product-card-apple ${!tieneStock ? 'out-of-stock' : ''}`;
+
+        // CLICK EN LA TARJETA → MODAL
+        card.onclick = () => {
+
+            openModal(p);
+
+        };
 
         card.innerHTML = `
             <div class="img-placeholder">
-                <img src="${p.imagen_url}" alt="${p.nombre}" onerror="this.src='/Imagenes/LogoT.jpg'">
-                ${!tieneStock ? '<span class="badge-agotado">Agotado</span>' : ''}
+
+                <img
+                    src="${p.imagen_url}"
+                    alt="${p.nombre}"
+                    onerror="this.src='/Imagenes/LogoT.jpg'"
+                >
+
+                ${!tieneStock
+                    ? '<span class="badge-agotado">Agotado</span>'
+                    : ''
+                }
+
             </div>
-            <h3 class="product-name">${p.nombre}</h3>
-            <p class="product-price">Q ${parseFloat(p.precio).toFixed(2)}</p>
-            <p class="product-stock">${tieneStock ? `Disponibles: ${p.cantidad}` : 'Sin existencias'}</p>
-            <button class="btn-apple" ${!tieneStock ? 'disabled' : ''}>Ver Detalles</button>
+
+            <h3 class="product-name">
+                ${p.nombre}
+            </h3>
+
+            <p class="product-price">
+                Q ${parseFloat(p.precio).toFixed(2)}
+            </p>
+
+            <p class="product-stock">
+                ${tieneStock
+                    ? `Disponibles: ${p.cantidad}`
+                    : 'Sin existencias'
+                }
+            </p>
+
+            <button
+                class="btn-apple"
+                ${!tieneStock ? 'disabled' : ''}
+            >
+                Ver Detalles
+            </button>
         `;
+
         grid.appendChild(card);
+
+        // CLICK EN BOTÓN → PÁGINA PRODUCTO
+        const boton =
+        card.querySelector("button");
+
+        boton.addEventListener("click", (e) => {
+
+            e.stopPropagation();
+
+            window.location.href =
+            'producto.html?id=' + p.id;
+
+        });
+
     });
+
 }
 
 // 3. BUSCADOR EN TIEMPO REAL
@@ -292,36 +387,49 @@ function inicializarBuscador() {
 
 // 4. CARRITO CON CONTROL DE CANTIDADES
 function agregarAlCarritoDesdeModal() {
-    const nombre = document.getElementById('modalTitle').innerText;
-    const precio = parseFloat(document.getElementById('modalPriceLabel').innerText.replace('Q ', ''));
-    const img = document.getElementById('modalImg').src;
-    
-    // Buscamos el stock máximo desde la lista original
-    const productoBase = productosOriginales.find(p => p.nombre === nombre);
-    const stockMax = productoBase ? productoBase.cantidad : 0;
 
-    const existe = carrito.find(item => item.nombre === nombre);
+    if (!productoActual) return;
+
+    const existe = carrito.find(
+        item => item.id === productoActual.id
+    );
 
     if (existe) {
-        if (existe.cantidadEnCarrito < stockMax) {
+
+        if (existe.cantidadEnCarrito < productoActual.cantidad) {
+
             existe.cantidadEnCarrito++;
+
         } else {
-            alert("⚠️ No puedes agregar más, has alcanzado el límite de stock.");
+
+            mostrarAlerta(
+                "⚠️ No hay más stock disponible"
+            );
+
             return;
         }
+
     } else {
+
         carrito.push({
-            nombre,
-            precio,
-            img,
+
+            id: productoActual.id,
+            nombre: productoActual.nombre,
+            precio: parseFloat(productoActual.precio),
+            img: productoActual.imagen_url,
             cantidadEnCarrito: 1,
-            stockMax: stockMax
+            stockMax: productoActual.cantidad
+
         });
     }
-    
-    actualizarCarritoUI();
-    closeModal();
-    toggleCarrito();
+
+   actualizarCarritoUI();
+
+closeModal();
+
+document.getElementById('side-cart').classList.add('open');
+
+mostrarAlerta("Producto agregado al carrito");
 }
 
 // 5. INTERFAZ DEL CARRITO ACTUALIZADA
@@ -353,8 +461,21 @@ function actualizarCarritoUI() {
         `;
     });
 
+    if (carrito.length === 0) {
+
+    cartContainer.innerHTML = `
+        <p style="text-align:center; color:#888;">
+            Tu carrito está vacío
+        </p>
+    `;
+}
+
     countContainer.innerText = carrito.reduce((sum, p) => sum + p.cantidadEnCarrito, 0);
     totalContainer.innerText = `Q ${total.toFixed(2)}`;
+    localStorage.setItem(
+    "carrito",
+    JSON.stringify(carrito)
+);
 }
 
 function cambiarCantidad(index, valor) {
