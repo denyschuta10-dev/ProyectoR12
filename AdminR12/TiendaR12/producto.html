@@ -91,7 +91,7 @@
 
                 <button
                     class="btn-apple"
-                    onclick="agregarProducto()"
+                    onclick="agregarAlCarritoDesdeModal()" 
                 >
 
                     Agregar al carrito
@@ -208,6 +208,39 @@ document.addEventListener("keydown", function(e) {
 
         cerrarZoom();
     }
+});
+
+let productoActual = null;
+
+const params = new URLSearchParams(window.location.search);
+
+const id = params.get("id");
+
+fetch('/productos')
+
+.then(res => res.json())
+
+.then(productos => {
+
+    productoActual = productos.find(p => p.id == id);
+
+    if (!productoActual) return;
+
+    document.getElementById("producto-img").src =
+    productoActual.imagen_url;
+
+    document.getElementById("producto-nombre").innerText =
+    productoActual.nombre;
+
+    document.getElementById("producto-precio").innerText =
+    "Q " + parseFloat(productoActual.precio).toFixed(2);
+
+    document.getElementById("producto-descripcion").innerText =
+    productoActual.descripcion;
+
+    document.getElementById("producto-stock").innerText =
+    "Disponibles: " + productoActual.cantidad;
+
 });
 
 </script>
