@@ -521,6 +521,9 @@ function agregarProducto() {
 
     if (!productoActual) return;
 
+    let carrito =
+    JSON.parse(localStorage.getItem("carrito")) || [];
+
     const existe = carrito.find(
         item => item.id === productoActual.id
     );
