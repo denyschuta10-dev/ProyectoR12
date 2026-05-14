@@ -562,3 +562,13 @@ function agregarProducto() {
 
     mostrarAlerta("Producto agregado al carrito");
 }
+
+
+window.addEventListener("pageshow", function() {
+
+    carrito =
+    JSON.parse(localStorage.getItem("carrito")) || [];
+
+    actualizarCarritoUI();
+
+});
