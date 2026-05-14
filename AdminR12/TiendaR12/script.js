@@ -264,9 +264,13 @@ function prevClientImage() {
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    cargarProductosDesdeBD();
+    if (document.getElementById('product-grid-db')) {
+        cargarProductosDesdeBD();
+    }
 
-    actualizarCarritoUI();
+    if (document.getElementById('cart-items')) {
+        actualizarCarritoUI();
+    }
 
 });
 
@@ -277,6 +281,8 @@ let productosOriginales = []; // Guardamos la lista completa para el buscador
 // 1. CARGAR PRODUCTOS Y GUARDARLOS
 function cargarProductosDesdeBD() {
     const grid = document.getElementById('product-grid-db');
+
+if (!grid) return;
     
     fetch('/productos')
         .then(response => response.json())
@@ -434,6 +440,8 @@ mostrarAlerta("Producto agregado al carrito");
 
 // 5. INTERFAZ DEL CARRITO ACTUALIZADA
 function actualizarCarritoUI() {
+
+    if (!document.getElementById('cart-items')) return;
     const cartContainer = document.getElementById('cart-items');
     const totalContainer = document.getElementById('cart-total');
     const countContainer = document.getElementById('cart-count');
