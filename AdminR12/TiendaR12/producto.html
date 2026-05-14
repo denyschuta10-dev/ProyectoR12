@@ -164,7 +164,173 @@
 </div>
 
 <script src="../TiendaR12/script.js"></script>
+<script>
 
+let productoActual = null;
+
+const params = new URLSearchParams(window.location.search);
+
+const id = params.get("id");
+
+fetch('/productos')
+
+.then(res => res.json())
+
+.then(productos => {
+
+    productoActual = productos.find(p => p.id == id);
+
+    if (!productoActual) {
+
+        document.body.innerHTML =
+        "<h1 style='text-align:center;margin-top:100px;'>Producto no encontrado</h1>";
+
+        return;
+    }
+
+    document.getElementById("producto-img").src =
+    productoActual.imagen_url;
+
+    document.getElementById("producto-nombre").innerText =
+    productoActual.nombre;
+
+    document.getElementById("producto-precio").innerText =
+    "Q " + parseFloat(productoActual.precio).toFixed(2);
+
+    document.getElementById("producto-descripcion").innerText =
+    productoActual.descripcion;
+
+    document.getElementById("producto-stock").innerText =
+    "Disponibles: " + productoActual.cantidad;
+
+});
+
+// AGREGAR AL CARRITO
+function agregarProducto() {
+
+    if (!productoActual) return;
+
+    let carrito =
+    JSON.parse(localStorage.getItem("carrito")) || [];
+
+    const existe =
+    carrito.find(p => p.id === productoActual.id);
+
+    if (existe) {
+
+        if (existe.cantidadEnCarrito < productoActual.cantidad) {
+
+            existe.cantidadEnCarrito++;
+
+        } else {
+
+            mostrarAlerta("No hay más stock disponible");
+
+            return;
+        }
+
+    } else {
+
+        carrito.push({
+
+            id: productoActual.id,
+            nombre: productoActual.nombre,
+            precio: parseFloat(productoActual.precio),
+            img: productoActual.imagen_url,
+            cantidadEnCarrito: 1,
+            stockMax: productoActual.cantidad
+
+        });
+    }
+
+    localStorage.setItem(
+        "carrito",
+        JSON.stringify(carrito)
+    );
+
+    mostrarAlerta("Producto agregado al carrito");
+}
+
+// WHATSAPP
+function comprarWhatsApp() {
+
+    if (!productoActual) return;
+
+    const mensaje =
+`Hola R12 Sports 🦁
+
+Quiero comprar:
+
+📦 ${productoActual.nombre}
+💰 Q ${parseFloat(productoActual.precio).toFixed(2)}`;
+
+    window.open(
+        `https://wa.me/50233816134?text=${encodeURIComponent(mensaje)}`,
+        '_blank'
+    );
+}
+
+// ALERTA
+function mostrarAlerta(msg) {
+
+    document.getElementById("alertMessage").innerText = msg;
+
+    document.getElementById("customAlert").style.display = "flex";
+
+    document.body.style.overflow = "hidden";
+}
+
+function cerrarAlerta() {
+
+    document.getElementById("customAlert").style.display = "none";
+
+    document.body.style.overflow = "auto";
+}
+
+// ZOOM
+function abrirZoom() {
+
+    const modal =
+    document.getElementById("zoomModal");
+
+    const zoomImg =
+    document.getElementById("zoomImg");
+
+    zoomImg.src =
+    document.getElementById("producto-img").src;
+
+    modal.style.display = "flex";
+
+    document.body.style.overflow = "hidden";
+}
+
+function cerrarZoom() {
+
+    document.getElementById("zoomModal").style.display = "none";
+
+    document.body.style.overflow = "auto";
+}
+
+window.addEventListener("click", function(e) {
+
+    const modal =
+    document.getElementById("zoomModal");
+
+    if (e.target === modal) {
+
+        cerrarZoom();
+    }
+});
+
+document.addEventListener("keydown", function(e) {
+
+    if (e.key === "Escape") {
+
+        cerrarZoom();
+    }
+});
+
+</script>
 </body>
 
 </html>
