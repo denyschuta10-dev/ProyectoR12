@@ -1289,10 +1289,12 @@ body{
 
 .store-map-container{
     display: flex;
-    gap: 40px;
+    gap: 20px;
     align-items: center;
     justify-content: center;
-    flex-wrap: wrap;
+    max-width: 1300px;
+    margin: auto;
+    padding: 0 5%;
 }
 
 .store-info{

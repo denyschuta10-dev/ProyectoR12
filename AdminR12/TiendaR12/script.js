@@ -572,3 +572,20 @@ window.addEventListener("pageshow", function() {
     actualizarCarritoUI();
 
 });
+
+function comprarWhatsApp() {
+
+    if (!productoActual) return;
+
+    const mensaje = `¡Hola R12 Sports! 🦁
+
+Quiero comprar este producto:
+
+📦 ${productoActual.nombre}
+💰 Q ${parseFloat(productoActual.precio).toFixed(2)}`;
+
+    window.open(
+        `https://wa.me/50233816134?text=${encodeURIComponent(mensaje)}`,
+        "_blank"
+    );
+}
