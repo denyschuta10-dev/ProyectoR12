@@ -1653,7 +1653,20 @@ body {
 .producto-stock{
     font-size: 22px;
     font-weight: 600;
-    margin-bottom: 35px;
+    margin-bottom: 18px;
+}
+
+.producto-note{
+    font-size: 0.98rem;
+    color: var(--text-secondary);
+    margin-bottom: 28px;
+}
+
+.product-actions-grid{
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 14px;
 }
 
 .producto-info button{
