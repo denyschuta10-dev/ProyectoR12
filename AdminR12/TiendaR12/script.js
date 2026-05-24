@@ -357,7 +357,7 @@ function renderizarProductos(lista) {
                 class="btn-apple"
                 ${!tieneStock ? 'disabled' : ''}
             >
-                Ver Detalles
+                Ver producto
             </button>
         `;
 

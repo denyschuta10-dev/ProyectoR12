@@ -301,11 +301,28 @@ app.post("/alumnos", (req, res) => {
 });
 
 // 3. Marcar asistencia
-app.put("/alumnos/asistencia/:id", (req, res) => {
-    const sql = "UPDATE alumnos SET asistencias = asistencias + 1 WHERE id = ? AND asistencias < 5";
+function obtenerSabadosDelMesActual() {
+    const hoy = new Date();
+    const mes = hoy.getMonth();
+    const año = hoy.getFullYear();
+    let contador = 0;
+    let fecha = new Date(año, mes, 1);
+    while (fecha.getMonth() === mes) {
+        if (fecha.getDay() === 6) contador++;
+        fecha.setDate(fecha.getDate() + 1);
+    }
+    return contador;
+}
 
-    conexion.query(sql, [req.params.id], (err) => {
+app.put("/alumnos/asistencia/:id", (req, res) => {
+    const topeSabados = obtenerSabadosDelMesActual();
+    const sql = "UPDATE alumnos SET asistencias = asistencias + 1 WHERE id = ? AND asistencias < ?";
+
+    conexion.query(sql, [req.params.id, topeSabados], (err, result) => {
         if (err) return res.status(500).send(err);
+        if (result.affectedRows === 0) {
+            return res.status(400).send("No se puede marcar más asistencia este mes");
+        }
         res.send("Asistencia marcada");
     });
 });

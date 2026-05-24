@@ -10,7 +10,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Producto | R12 Sports</title>
+    <title>R12 | Producto Premium</title>
 
     <link rel="stylesheet" href="styletienda.css">
 
@@ -85,8 +85,19 @@
                     id="producto-stock"
                 ></p>
 
+                <div class="producto-meta">
+                    <span class="product-badge">Entrega exprés</span>
+                    <span class="product-badge">Construcción duradera</span>
+                </div>
+
+                <ul class="product-features" id="producto-caracteristicas">
+                    <li>Material premium</li>
+                    <li>Ajuste atlético</li>
+                    <li>Soporte de alto rendimiento</li>
+                </ul>
+
                 <p class="producto-note">
-                    Compra segura con despacho directo desde nuestro inventario.
+                    Estilo premium con despacho inmediato y atención personalizada.
                 </p>
 
                 <div class="product-actions-grid">
@@ -242,6 +253,22 @@ fetch('/productos')
 
     document.getElementById("producto-stock").innerText =
     "Disponibles: " + productoActual.cantidad;
+
+    const caracteristicas = productoActual.caracteristicas || [
+        "Material premium",
+        "Ajuste atlético",
+        "Diseño profesional"
+    ];
+
+    const listaCaracteristicas =
+    document.getElementById("producto-caracteristicas");
+
+    if (listaCaracteristicas) {
+        listaCaracteristicas.innerHTML =
+            caracteristicas.map(item =>
+                `<li>${item}</li>`
+            ).join("");
+    }
 
 });
 
