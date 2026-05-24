@@ -1,22 +1,16 @@
 const mysql = require("mysql2");
 
-// Esta configuración jala los datos automáticos de Railway
-const dbConfig = {
+const pool = mysql.createPool({
     host: process.env.MYSQLHOST,
     user: process.env.MYSQLUSER,
     password: process.env.MYSQLPASSWORD,
     database: process.env.MYSQLDATABASE,
-    port: process.env.MYSQLPORT || 3306
-};
-
-const conexion = mysql.createConnection(dbConfig);
-
-conexion.connect(err => {
-    if (err) {
-        console.log("❌ Error:", err.message);
-    } else {
-        console.log("✅ Conexión lista");
-    }
+    port: process.env.MYSQLPORT,
+    ssl: { rejectUnauthorized: false },
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0
 });
 
-module.exports = conexion;
+// Esto hace que el objeto 'conexion' se comporte igual que antes
+module.exports = pool;
