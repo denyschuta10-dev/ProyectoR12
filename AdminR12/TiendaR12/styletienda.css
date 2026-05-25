@@ -3,22 +3,22 @@
 ========================================= */
 :root {
 
-    --background: #f5f5f5;
+    --background: #eef2f7;
     --surface: #ffffff;
-    --surface-soft: #f2f2f2;
-    --text-primary: #101010;
-    --text-secondary: #5f6368;
-    --border: #e1e1e1;
-    --brand: #111111;
-    --brand-soft: #f5f5f5;
-    --accent: #111111;
-    --accent-dark: #000000;
+    --surface-soft: #f7f9fc;
+    --text-primary: #111827;
+    --text-secondary: #5b6773;
+    --border: #e3e8ef;
+    --brand: #0f3366;
+    --brand-soft: #e7eff9;
+    --accent: #d4af37;
+    --accent-dark: #a67c2e;
     --success: #25d366;
     --success-hover: #1eb959;
-    --danger: #d62728;
-    --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.08);
-    --shadow-medium: 0 24px 60px rgba(0, 0, 0, 0.12);
-    --shadow-strong: 0 40px 90px rgba(0, 0, 0, 0.18);
+    --danger: #ff3b30;
+    --shadow-soft: 0 12px 35px rgba(15, 23, 42, 0.08);
+    --shadow-medium: 0 20px 50px rgba(15, 23, 42, 0.10);
+    --shadow-strong: 0 35px 80px rgba(15, 23, 42, 0.12);
     --transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
 }
 
@@ -460,13 +460,6 @@ h1, h2, h3, h4, h5, h6, .brand-name, strong {
     color:white;
 }
 
-.cart-subtitle{
-    margin-top:8px;
-    font-size:0.95rem;
-    color:rgba(255,255,255,0.72);
-    max-width:300px;
-}
-
 .close-cart{
     font-size:30px;
     cursor:pointer;
@@ -559,25 +552,6 @@ h1, h2, h3, h4, h5, h6, .brand-name, strong {
     border-top:1px solid rgba(255,255,255,0.08);
 
     background:#0f0f0f;
-}
-
-.cart-note{
-    font-size:0.95rem;
-    color:rgba(255,255,255,0.7);
-    margin-bottom:18px;
-    line-height:1.6;
-}
-
-.side-cart .btn-whatsapp-buy{
-    background:white;
-    color:#111111;
-    padding:18px;
-    border-radius:24px;
-    box-shadow:0 18px 40px rgba(0,0,0,0.12);
-}
-
-.side-cart .btn-whatsapp-buy:hover{
-    background:#f2f2f2;
 }
 
 .total-row{
@@ -1085,13 +1059,12 @@ h1, h2, h3, h4, h5, h6, .brand-name, strong {
 
 .hero-r12 {
     width: 100%;
-    min-height: 92vh;
+    min-height: 90vh;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 80px 8%;
-    background: linear-gradient(180deg, #111111 0%, #111111 48%, #f5f5f5 100%);
-    color: white;
+    background: linear-gradient(135deg, #eef5fb 0%, #ffffff 55%, #f9fbff 100%);
 }
 
 .hero-content {
@@ -1113,8 +1086,8 @@ h1, h2, h3, h4, h5, h6, .brand-name, strong {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: white;
-    color: var(--brand);
+    background: var(--brand);
+    color: white;
     padding: 12px 24px;
     border-radius: 999px;
     font-size: 0.95rem;
@@ -1131,12 +1104,12 @@ h1, h2, h3, h4, h5, h6, .brand-name, strong {
     letter-spacing: -2px;
     margin-bottom: 24px;
     max-width: 680px;
-    color: white;
+    color: var(--text-primary);
 }
 
 .hero-text p {
     font-size: 1.18rem;
-    color: rgba(255, 255, 255, 0.82);
+    color: var(--text-secondary);
     line-height: 1.8;
     max-width: 600px;
     margin-bottom: 35px;
@@ -1146,18 +1119,18 @@ h1, h2, h3, h4, h5, h6, .brand-name, strong {
     padding: 18px 42px;
     border: none;
     border-radius: 999px;
-    background: white;
-    color: var(--brand);
+    background: var(--brand);
+    color: white;
     font-size: 1rem;
-    font-weight: 800;
+    font-weight: 700;
     cursor: pointer;
     transition: var(--transition);
-    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.16);
+    box-shadow: 0 18px 30px rgba(15, 51, 102, 0.16);
 }
 
 .hero-text button:hover {
     transform: translateY(-2px);
-    opacity: 0.94;
+    opacity: 0.96;
 }
 
 .hero-image {
@@ -1176,15 +1149,15 @@ h1, h2, h3, h4, h5, h6, .brand-name, strong {
 
 .promo-banner {
     display: grid;
-    grid-template-columns: 1.3fr 0.7fr;
+    grid-template-columns: 1.2fr 0.8fr;
     gap: 28px;
     max-width: 1200px;
     margin: 0 auto 60px;
     padding: 40px 8%;
-    background: #111111;
-    color: white;
+    background: linear-gradient(180deg, #ffffff, #f4f8ff);
+    border: 1px solid rgba(15, 23, 42, 0.08);
     border-radius: 32px;
-    box-shadow: 0 28px 70px rgba(0, 0, 0, 0.16);
+    box-shadow: var(--shadow-soft);
 }
 
 .promo-content {
@@ -1200,7 +1173,7 @@ h1, h2, h3, h4, h5, h6, .brand-name, strong {
     justify-content: center;
     padding: 10px 18px;
     border-radius: 999px;
-    background: white;
+    background: var(--brand-soft);
     color: var(--brand);
     font-weight: 800;
     letter-spacing: 0.4px;
@@ -1212,11 +1185,11 @@ h1, h2, h3, h4, h5, h6, .brand-name, strong {
     font-size: 3rem;
     line-height: 1.05;
     margin: 0;
-    color: white;
+    color: var(--text-primary);
 }
 
 .promo-banner p {
-    color: rgba(255, 255, 255, 0.82);
+    color: var(--text-secondary);
     font-size: 1rem;
     max-width: 580px;
     line-height: 1.8;
@@ -1224,8 +1197,8 @@ h1, h2, h3, h4, h5, h6, .brand-name, strong {
 
 .promo-card {
     border-radius: 32px;
-    background: #181818;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: linear-gradient(180deg, rgba(15, 51, 102, 0.08), rgba(255,255,255,0.95));
+    border: 1px solid rgba(15, 23, 42, 0.08);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1240,7 +1213,7 @@ h1, h2, h3, h4, h5, h6, .brand-name, strong {
 }
 
 .promo-card-body span {
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--brand);
     font-weight: 800;
     letter-spacing: 0.3px;
 }
@@ -1248,11 +1221,10 @@ h1, h2, h3, h4, h5, h6, .brand-name, strong {
 .promo-card-body h3 {
     font-size: 2rem;
     margin: 0;
-    color: white;
 }
 
 .promo-card-body p {
-    color: rgba(255, 255, 255, 0.75);
+    color: var(--text-secondary);
     line-height: 1.7;
 }
 
@@ -1271,8 +1243,8 @@ h1, h2, h3, h4, h5, h6, .brand-name, strong {
     justify-content: center;
     padding: 8px 16px;
     border-radius: 999px;
-    background: white;
-    color: #111111;
+    background: var(--brand);
+    color: white;
     font-size: 0.9rem;
 }
 
@@ -1659,16 +1631,18 @@ h1, h2, h3, h4, h5, h6, .brand-name, strong {
 
     align-items:center;
 
-    background:#111111;
+    background:rgba(255,255,255,0.95);
+
+    backdrop-filter:blur(18px);
 
     padding:50px;
 
     border-radius:35px;
 
-    border:1px solid rgba(255,255,255,0.08);
+    border:1px solid rgba(15, 23, 42, 0.08);
 
     box-shadow:
-    0 20px 60px rgba(0,0,0,0.18);
+    0 20px 50px rgba(15, 23, 42, 0.08);
 }
 
 .producto-imagen{
@@ -1690,7 +1664,7 @@ h1, h2, h3, h4, h5, h6, .brand-name, strong {
 
     border-radius:28px;
 
-    background:#ffffff;
+    background:#f8f8f8;
 
     padding:18px;
 
@@ -1699,7 +1673,7 @@ h1, h2, h3, h4, h5, h6, .brand-name, strong {
     cursor:zoom-in;
 
     box-shadow:
-    0 15px 35px rgba(0,0,0,0.22);
+    0 15px 35px rgba(15, 23, 42, 0.10);
 }
 
 .producto-imagen img:hover{
@@ -1708,36 +1682,35 @@ h1, h2, h3, h4, h5, h6, .brand-name, strong {
 
 .producto-info{
     flex: 1;
-    color:white;
+    color: var(--text-primary);
 }
 
 .producto-info h1{
-    font-size: 56px;
-    margin-bottom: 18px;
-    font-weight: 900;
-    letter-spacing: -1px;
-    color: white;
+    font-size: 58px;
+    margin-bottom: 20px;
+    font-weight: 700;
+    color: var(--text-primary);
 }
 
 .producto-precio{
-    font-size: 42px;
+    font-size: 45px;
     font-weight: bold;
-    margin-bottom: 24px;
-    color: var(--accent);
+    margin-bottom: 25px;
+    color: var(--brand);
 }
 
 .producto-descripcion{
-    font-size: 19px;
+    font-size: 20px;
     line-height: 1.8;
-    color: rgba(255,255,255,0.82);
-    margin-bottom: 24px;
+    color: var(--text-secondary);
+    margin-bottom: 30px;
 }
 
 .producto-stock{
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 600;
     margin-bottom: 18px;
-    color: rgba(255,255,255,0.88);
+    color: var(--text-secondary);
 }
 
 .producto-meta{
@@ -1753,14 +1726,14 @@ h1, h2, h3, h4, h5, h6, .brand-name, strong {
     justify-content: center;
     padding: 10px 18px;
     border-radius: 999px;
-    background: rgba(255,255,255,0.08);
-    color: white;
-    font-weight: 600;
+    background: var(--brand-soft);
+    color: var(--brand);
+    font-weight: 700;
 }
 
 .producto-note{
     font-size: 0.98rem;
-    color: rgba(255,255,255,0.7);
+    color: var(--text-secondary);
     margin-bottom: 28px;
 }
 
@@ -1776,7 +1749,7 @@ h1, h2, h3, h4, h5, h6, .brand-name, strong {
     display:flex;
     align-items:center;
     gap:10px;
-    color: rgba(255,255,255,0.8);
+    color: var(--text-secondary);
     font-size: 1rem;
 }
 
