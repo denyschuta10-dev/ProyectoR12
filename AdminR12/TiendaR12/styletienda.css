@@ -1243,9 +1243,11 @@ h1, h2, h3, h4, h5, h6, .brand-name, strong {
     justify-content: center;
     padding: 8px 16px;
     border-radius: 999px;
-    background: var(--brand);
-    color: white;
+    background: var(--accent);
+    color: var(--text-primary);
     font-size: 0.9rem;
+    font-weight: 700;
+    border: 1px solid rgba(15, 23, 42, 0.09);
 }
 
 .btn-secondary {
@@ -1255,17 +1257,17 @@ h1, h2, h3, h4, h5, h6, .brand-name, strong {
     width: fit-content;
     padding: 15px 28px;
     border-radius: 18px;
-    border: 1px solid rgba(255,255,255,0.15);
-    background: rgba(255,255,255,0.08);
-    color: white;
+    border: 1px solid var(--border);
+    background: var(--surface-soft);
+    color: var(--text-primary);
     text-decoration: none;
     transition: var(--transition);
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
 .btn-secondary:hover {
     transform: translateY(-1px);
-    background: rgba(255,255,255,0.14);
+    background: var(--surface);
 }
 
 .producto-meta {
