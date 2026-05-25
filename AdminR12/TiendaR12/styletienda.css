@@ -1243,11 +1243,12 @@ h1, h2, h3, h4, h5, h6, .brand-name, strong {
     justify-content: center;
     padding: 8px 16px;
     border-radius: 999px;
-    background: var(--brand);
-    color: white;
+    background: #ffffff;
+    color: var(--brand);
     font-size: 0.9rem;
     font-weight: 700;
-    border: 1px solid rgba(15, 23, 42, 0.09);
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
 }
 
 .btn-secondary {
