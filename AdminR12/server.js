@@ -1,8 +1,12 @@
+require('dotenv').config(); // Cargar variables de entorno
+
 const express = require("express");
 const cors = require("cors");
 const mysql = require("mysql2");
 const path = require("path");
 const multer = require("multer");
+const cloudinary = require("cloudinary").v2;
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const app = express();
 
 
@@ -245,25 +249,34 @@ app.listen(PORT, () => {
 });
 
 
-// Configuración de dónde y cómo se guardan los archivos
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'uploads/'); // Asegúrate de crear esta carpeta en adminr12
-    },
-    filename: (req, file, cb) => {
-        cb(null, Date.now() + path.extname(file.originalname)); // Nombre único
+// ================= CONFIGURACIÓN CLOUDINARY =================
+
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
+// Configuración de Cloudinary Storage para multer
+const storage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: {
+        folder: 'R12Sports/productos', // Carpeta en Cloudinary
+        format: async (req, file) => 'jpg',
+        public_id: (req, file) => {
+            return Date.now() + '-' + file.originalname.split('.')[0];
+        }
     }
 });
 
 const upload = multer({ storage: storage });
 
-// RUTA NUEVA: Para subir la imagen
-// Busca esta parte en tu server.js y cámbiala:
+// RUTA PARA SUBIR IMAGEN A CLOUDINARY
 app.post('/upload-image', upload.single('imagen'), (req, res) => {
-    if (!req.file) return res.status(400).send('No se subió ninguna imagen');
+    if (!req.file) return res.status(400).json({ error: 'No se subió ninguna imagen' });
     
-    // Esto hace que la URL sea relativa y funcione en cualquier link (local o nube)
-    const urlImagen = `/uploads/${req.file.filename}`;
+    // URL permanente desde Cloudinary
+    const urlImagen = req.file.path;
     res.json({ url: urlImagen });
 });
 
