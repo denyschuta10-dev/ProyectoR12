@@ -257,6 +257,19 @@ function prevClientImage() {
     document.getElementById("clientModalImg").src = clientImages[clientIndex];
 }
 
+// Registro del service worker para PWA
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/TiendaR12/sw.js')
+            .then(reg => {
+                console.log('Service Worker registrado:', reg.scope);
+            })
+            .catch(err => {
+                console.warn('No se pudo registrar el Service Worker:', err);
+            });
+    });
+}
+
 
 // ========================================
 // CONEXIÓN CON EL INVENTARIO REAL (BACKEND)
